@@ -1,0 +1,15 @@
+# pilot collection
+
+Open Data tools → Review pilot observations. Time flagged reviews and record whether the issue was already known. Describe new discoveries. For controls, let the server randomly choose a currently unflagged assigned client and record whether a missed issue was found. Unassessable controls must remain unlabelled. Explicitly record voluntary use; repeat visits alone do not establish it. Export the observations CSV for independent analysis. Distinct-case summaries use the latest label per case; sampled misses are not a population false-negative rate.
+
+# Advisor workflow pilot
+
+Run a two-week pilot with consenting advisors using their assigned books. Begin after provider evidence, valuation coverage and client benchmark/mandate policies have been reviewed. Keep actual client data on the intended protected local environment. Use synthetic data for demonstrations and technical checks.
+
+1. Agree the review question and success criteria before collecting results. Suggested primary measures: median time to complete an evidence-backed review, proportion of surfaced cases independently judged actionable, and return usage on separate days. Record the number of participating advisors and eligible clients; do not infer a 200-client field study from the synthetic test.
+2. Sample both surfaced cases and a random selection of clients with no signal. Review the random sample independently to look for missed cases. Stratify by attention priority, client contact frequency, goals, portfolio types and source freshness; include the quieter portion of the book.
+3. Use comparable separate clients for the usual workflow and the AdviCue workflow. Alternate order between advisors/days to reduce learning and order effects. Record interruptions and missing source evidence. A manually entered baseline is self-reported; keep the observation sheet that supports it.
+4. In a client/case, expand “Measure the review workflow,” start when the review begins and finish when the advisor records its conclusion. Label relevant, false positive or not assessable. Record why a false positive or missing-data case was unhelpful, and whether the action was already known. Do not repeatedly relabel one case to inflate the denominator. Exclude interrupted sessions from a separate clean timing analysis; the application reports elapsed wall time.
+5. Each day record which advisors returned voluntarily and what changed the next conversation or follow-up. At the end, report distributions, denominators and uncertainty alongside the median. Report evidence problems separately from financial alerts. Distinguish a completed task, a satisfied agreed condition, and an investment outcome; they are different observations.
+
+Decide whether to retain, tune or retire each rule based on reviewed evidence. A useful result would show reduced review effort and useful discoveries among less frequently reviewed clients, with manageable false positives. No field results or time-saving percentages are supplied with this release.

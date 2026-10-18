@@ -1,0 +1,3 @@
+# AI inference uses separately installed llama.cpp and whisper.cpp executables.
+# No Python cloud SDK or speech model downloader is used.
+-r requirements.txt

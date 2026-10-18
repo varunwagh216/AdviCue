@@ -1,0 +1,109 @@
+{
+  "$defs": {
+    "AllocationBand": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_class": {
+          "maxLength": 100,
+          "minLength": 2,
+          "title": "Asset Class",
+          "type": "string"
+        },
+        "min_pct": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Min Pct"
+        },
+        "max_pct": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Max Pct"
+        }
+      },
+      "required": [
+        "asset_class",
+        "min_pct",
+        "max_pct"
+      ],
+      "title": "AllocationBand",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "client_id": {
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Client Id",
+      "type": "string"
+    },
+    "effective_from": {
+      "format": "date",
+      "title": "Effective From",
+      "type": "string"
+    },
+    "effective_to": {
+      "format": "date",
+      "title": "Effective To",
+      "type": "string"
+    },
+    "source_reference": {
+      "maxLength": 500,
+      "minLength": 5,
+      "title": "Source Reference",
+      "type": "string"
+    },
+    "rationale": {
+      "maxLength": 2000,
+      "minLength": 12,
+      "title": "Rationale",
+      "type": "string"
+    },
+    "liquidity_context": {
+      "default": "",
+      "maxLength": 1000,
+      "title": "Liquidity Context",
+      "type": "string"
+    },
+    "illustrative": {
+      "default": false,
+      "title": "Illustrative",
+      "type": "boolean"
+    },
+    "bands": {
+      "items": {
+        "$ref": "#/$defs/AllocationBand"
+      },
+      "maxItems": 30,
+      "minItems": 1,
+      "title": "Bands",
+      "type": "array"
+    }
+  },
+  "required": [
+    "client_id",
+    "effective_from",
+    "effective_to",
+    "source_reference",
+    "rationale",
+    "bands"
+  ],
+  "title": "MandateEvidence",
+  "type": "object"
+}

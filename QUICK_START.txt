@@ -1,0 +1,14 @@
+AdviCue AI
+
+Extract, open AdviCue_AI in VS Code, and run:
+.\SETUP_WINDOWS.bat
+.\RUN_WINDOWS.bat
+
+First setup downloads AI assets; model weights are not included.
+Later launches need only RUN_WINDOWS.bat and work offline.
+Python 3.14 x64 must already be installed.
+Close an older backend using port 8000 first.
+Open http://127.0.0.1:8000
+Login: advisor@advicue.local / Advisor2026!
+
+See README.md for details.

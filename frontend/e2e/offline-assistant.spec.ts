@@ -1,0 +1,21 @@
+import {expect,test} from '@playwright/test'
+import path from 'node:path'
+const email=process.env.E2E_ADVISOR_EMAIL,password=process.env.E2E_ADVISOR_PASSWORD
+const audio=path.resolve('../docs/validation/sip-search.wav')
+test.use({permissions:['microphone'],launchOptions:{args:['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream',`--use-file-for-fake-audio-capture=${audio}`]}})
+async function login(page:import('@playwright/test').Page){test.skip(!email||!password,'Set advisor credentials');await page.goto('/login');await page.getByLabel('Email address').fill(email!);await page.getByLabel('Password').fill(password!);await page.getByRole('button',{name:/Sign in to workspace/}).click();await expect(page.getByRole('navigation',{name:'Main navigation'})).toBeVisible()}
+
+test('spoken question is transcribed by local whisper.cpp, reviewed, then searched',async({page})=>{
+ test.setTimeout(90000);await login(page);await page.getByRole('button',{name:'Speak your question',exact:true}).click();await expect(page.getByRole('button',{name:'Stop recording',exact:true})).toBeVisible();await page.waitForTimeout(4400);await page.getByRole('button',{name:'Stop recording',exact:true}).click();await expect(page.getByLabel('Ask AdviCue AI')).toHaveValue(/systematic investment/i,{timeout:45000});await expect(page.locator('.home-results')).toHaveCount(0);await page.getByRole('button',{name:'Search with AdviCue AI'}).click();await expect(page.locator('.home-result-heading')).toContainText('recorded SIP contributions',{timeout:30000});await expect(page.locator('.home-result-card')).toHaveCount(20);await page.screenshot({path:'../docs/screenshots/voice-search.png',fullPage:true})
+})
+test('SIP search returns totals and scoped names; unsupported requests ask for clarification',async({page})=>{
+ await login(page);await page.getByLabel('Ask AdviCue AI').fill('how many profiles have sips');await page.getByRole('button',{name:'Search with AdviCue AI'}).click();await expect(page.locator('.home-result-heading')).toContainText('20 of 20',{timeout:30000});await expect(page.locator('.home-result-heading')).toContainText('1,361,000.00');await expect(page.locator('.home-result-card')).toHaveCount(20);await page.getByLabel('Ask AdviCue AI').fill('how many profiles have insurance');await page.getByRole('button',{name:'Search with AdviCue AI'}).click();await expect(page.locator('.home-result-heading')).toContainText('not supported',{timeout:30000});await expect(page.locator('.home-result-card')).toHaveCount(0)
+})
+test('compiled workspace makes no external browser requests and microphone fits mobile',async({page,context})=>{
+ const external:string[]=[];await context.route('**/*',async route=>{const url=new URL(route.request().url());if(!['127.0.0.1','localhost','[::1]'].includes(url.hostname)){external.push(url.origin);await route.abort()}else await route.continue()});await login(page)
+ for(const route of ['/','/attention','/investors','/patterns','/advice','/advice/follow-ups','/local-ai','/data-trust','/activity']){await page.goto(route);await page.waitForLoadState('networkidle');await expect(page.locator('h1')).toBeVisible();await expect(page.locator('body')).not.toContainText('Demo Advisor');await expect(page.locator('body')).not.toContainText('ILLUSTRATIVE DEMO')}
+ await page.goto('/');await expect(page.getByLabel('Your client book')).toContainText('20');await page.setViewportSize({width:390,height:844});await expect(page.getByRole('button',{name:'Speak your question',exact:true})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBeTruthy();await page.screenshot({path:'../docs/screenshots/home-mobile.png',fullPage:true});expect(external).toEqual([])
+})
+test('voice recording can be cancelled without sending audio',async({page})=>{
+ await login(page);let uploads=0;page.on('request',r=>{if(r.url().includes('/assistant/transcribe'))uploads++});await page.getByRole('button',{name:'Speak your question',exact:true}).click();await expect(page.getByRole('button',{name:'Stop recording',exact:true})).toBeVisible();await page.getByRole('button',{name:'Cancel voice input'}).click();await expect(page.getByRole('button',{name:'Speak your question',exact:true})).toBeVisible();expect(uploads).toBe(0)
+})

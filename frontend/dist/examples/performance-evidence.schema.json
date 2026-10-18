@@ -1,0 +1,348 @@
+{
+  "$defs": {
+    "BenchmarkPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 160,
+          "minLength": 3,
+          "title": "Name",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 2000,
+          "minLength": 20,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "source_reference": {
+          "maxLength": 500,
+          "minLength": 5,
+          "title": "Source Reference",
+          "type": "string"
+        },
+        "client_mandate_reference": {
+          "maxLength": 500,
+          "minLength": 5,
+          "title": "Client Mandate Reference",
+          "type": "string"
+        },
+        "effective_from": {
+          "format": "date",
+          "title": "Effective From",
+          "type": "string"
+        },
+        "effective_to": {
+          "format": "date",
+          "title": "Effective To",
+          "type": "string"
+        },
+        "suitable_for_client": {
+          "const": true,
+          "title": "Suitable For Client",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "rationale",
+        "source_reference",
+        "client_mandate_reference",
+        "effective_from",
+        "effective_to",
+        "suitable_for_client"
+      ],
+      "title": "BenchmarkPolicy",
+      "type": "object"
+    },
+    "ClassPeriod": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_class": {
+          "maxLength": 100,
+          "minLength": 2,
+          "title": "Asset Class",
+          "type": "string"
+        },
+        "start_value": {
+          "anyOf": [
+            {
+              "maximum": 1000000000000000.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Start Value"
+        },
+        "end_value": {
+          "anyOf": [
+            {
+              "maximum": 1000000000000000.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "End Value"
+        },
+        "net_flow": {
+          "anyOf": [
+            {
+              "maximum": 1000000000000000.0,
+              "minimum": -1000000000000000.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Net Flow"
+        },
+        "benchmark_weight_pct": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Benchmark Weight Pct"
+        },
+        "benchmark_return_pct": {
+          "anyOf": [
+            {
+              "maximum": 10000.0,
+              "minimum": -100.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Benchmark Return Pct"
+        },
+        "valuation_reference": {
+          "maxLength": 500,
+          "minLength": 5,
+          "title": "Valuation Reference",
+          "type": "string"
+        },
+        "benchmark_reference": {
+          "maxLength": 500,
+          "minLength": 5,
+          "title": "Benchmark Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "asset_class",
+        "start_value",
+        "end_value",
+        "net_flow",
+        "benchmark_weight_pct",
+        "benchmark_return_pct",
+        "valuation_reference",
+        "benchmark_reference"
+      ],
+      "title": "ClassPeriod",
+      "type": "object"
+    },
+    "Flow": {
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "format": "date",
+          "title": "Date",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "CONTRIBUTION",
+            "WITHDRAWAL"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "maximum": 1000000000000000.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Amount"
+        },
+        "source_reference": {
+          "maxLength": 500,
+          "minLength": 5,
+          "title": "Source Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "date",
+        "kind",
+        "amount",
+        "source_reference"
+      ],
+      "title": "Flow",
+      "type": "object"
+    },
+    "Subperiod": {
+      "additionalProperties": false,
+      "properties": {
+        "start_date": {
+          "format": "date",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "format": "date",
+          "title": "End Date",
+          "type": "string"
+        },
+        "start_value": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "maximum": 1000000000000000.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Start Value"
+        },
+        "end_value": {
+          "anyOf": [
+            {
+              "maximum": 1000000000000000.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "End Value"
+        },
+        "flows": {
+          "items": {
+            "$ref": "#/$defs/Flow"
+          },
+          "maxItems": 1000,
+          "title": "Flows",
+          "type": "array"
+        },
+        "classes": {
+          "items": {
+            "$ref": "#/$defs/ClassPeriod"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Classes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "start_date",
+        "end_date",
+        "start_value",
+        "end_value",
+        "classes"
+      ],
+      "title": "Subperiod",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "client_id": {
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Client Id",
+      "type": "string"
+    },
+    "currency": {
+      "const": "INR",
+      "default": "INR",
+      "title": "Currency",
+      "type": "string"
+    },
+    "illustrative": {
+      "default": false,
+      "title": "Illustrative",
+      "type": "boolean"
+    },
+    "flow_statement_reference": {
+      "maxLength": 500,
+      "minLength": 5,
+      "title": "Flow Statement Reference",
+      "type": "string"
+    },
+    "valuation_coverage_reference": {
+      "maxLength": 500,
+      "minLength": 5,
+      "title": "Valuation Coverage Reference",
+      "type": "string"
+    },
+    "flows_complete": {
+      "const": true,
+      "title": "Flows Complete",
+      "type": "boolean"
+    },
+    "valuation_coverage_complete": {
+      "const": true,
+      "title": "Valuation Coverage Complete",
+      "type": "boolean"
+    },
+    "boundaries_include_all_flows_and_rebalances": {
+      "const": true,
+      "title": "Boundaries Include All Flows And Rebalances",
+      "type": "boolean"
+    },
+    "fees_taxes_consistent": {
+      "const": true,
+      "title": "Fees Taxes Consistent",
+      "type": "boolean"
+    },
+    "benchmark_policy": {
+      "$ref": "#/$defs/BenchmarkPolicy"
+    },
+    "periods": {
+      "items": {
+        "$ref": "#/$defs/Subperiod"
+      },
+      "maxItems": 366,
+      "minItems": 1,
+      "title": "Periods",
+      "type": "array"
+    }
+  },
+  "required": [
+    "client_id",
+    "flow_statement_reference",
+    "valuation_coverage_reference",
+    "flows_complete",
+    "valuation_coverage_complete",
+    "boundaries_include_all_flows_and_rebalances",
+    "fees_taxes_consistent",
+    "benchmark_policy",
+    "periods"
+  ],
+  "title": "PerformanceEvidence",
+  "type": "object"
+}

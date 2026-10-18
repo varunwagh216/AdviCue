@@ -1,0 +1,69 @@
+{
+  "live_model_requests": [
+    {
+      "query": "how many profiles have sips",
+      "intent": "SIPS",
+      "answer": "20 of 20 matching assigned clients have recorded SIP contributions, totalling INR 1,361,000.00.",
+      "seconds": 1.421
+    },
+    {
+      "query": "Which clients have no SIPs?",
+      "intent": "SIPS",
+      "answer": "0 of 20 matching assigned clients have no qualifying SIP transactions recorded.",
+      "seconds": 1.285
+    },
+    {
+      "query": "How many clients do I have?",
+      "intent": "BOOK",
+      "answer": "20 matching assigned clients. Latest recorded holdings total INR 31,912,327.88.",
+      "seconds": 1.328
+    },
+    {
+      "query": "Show moderate clients",
+      "intent": "BOOK",
+      "answer": "15 matching assigned clients. Latest recorded holdings total INR 27,543,796.62.",
+      "seconds": 1.345
+    },
+    {
+      "query": "Which clients have equity above 60%?",
+      "intent": "BOOK",
+      "answer": "8 matching assigned clients. Latest recorded holdings total INR 23,974,482.11.",
+      "seconds": 1.352
+    },
+    {
+      "query": "Show my reviews",
+      "intent": "REVIEWS",
+      "answer": "Found 20 recorded results in your assigned workspace.",
+      "seconds": 1.377
+    },
+    {
+      "query": "Show my follow-ups",
+      "intent": "FOLLOW_UPS",
+      "answer": "Found 2 recorded results in your assigned workspace.",
+      "seconds": 1.419
+    },
+    {
+      "query": "How many SIPs last month?",
+      "intent": "CLARIFY",
+      "answer": "Please ask for recorded SIP history or latest recorded holdings. Date-filtered search is not available yet.",
+      "seconds": 1.472
+    },
+    {
+      "query": "How many profiles have insurance?",
+      "intent": "CLARIFY",
+      "answer": "That field is not supported in search. Try a client name, SIP history, a risk profile, a goal or an allocation category.",
+      "seconds": 1.431
+    }
+  ],
+  "speech": {
+    "provider": "whisper.cpp",
+    "transcript": "How many clients have systematic investment plans?",
+    "seconds": 2.58,
+    "fixture": "Locally generated synthetic English speech; not a human accuracy study.",
+    "search_matched_clients": 20
+  },
+  "external_services_used": false,
+  "sqlite_expected_sip_clients": 20,
+  "sqlite_expected_sip_total": 1361000,
+  "passed": true
+}

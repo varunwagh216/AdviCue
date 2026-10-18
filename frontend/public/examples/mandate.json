@@ -1,0 +1,21 @@
+{
+  "client_id": "INV0009",
+  "illustrative": true,
+  "effective_from": "2026-01-01",
+  "effective_to": "2027-01-01",
+  "source_reference": "synthetic/mandate-not-client-consent",
+  "rationale": "Synthetic allocation ranges for demonstrating the approval workflow only.",
+  "liquidity_context": "Synthetic example; replace with advisor-reviewed client context.",
+  "bands": [
+    {
+      "asset_class": "Direct Equity",
+      "min_pct": "20",
+      "max_pct": "60"
+    },
+    {
+      "asset_class": "Fixed Deposit",
+      "min_pct": "20",
+      "max_pct": "60"
+    }
+  ]
+}

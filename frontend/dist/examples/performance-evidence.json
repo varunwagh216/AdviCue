@@ -1,0 +1,51 @@
+{
+  "client_id": "INV0009",
+  "illustrative": true,
+  "currency": "INR",
+  "flow_statement_reference": "synthetic/complete-flow-ledger",
+  "valuation_coverage_reference": "synthetic/all-boundaries",
+  "flows_complete": true,
+  "valuation_coverage_complete": true,
+  "boundaries_include_all_flows_and_rebalances": true,
+  "fees_taxes_consistent": true,
+  "benchmark_policy": {
+    "name": "Synthetic balanced benchmark",
+    "rationale": "Synthetic comparison for controlled arithmetic testing only.",
+    "source_reference": "synthetic/benchmark-policy",
+    "client_mandate_reference": "synthetic/client-mandate",
+    "effective_from": "2026-01-01",
+    "effective_to": "2026-02-01",
+    "suitable_for_client": true
+  },
+  "periods": [
+    {
+      "start_date": "2026-01-01",
+      "end_date": "2026-02-01",
+      "start_value": "100000",
+      "end_value": "107000",
+      "flows": [],
+      "classes": [
+        {
+          "asset_class": "Direct Equity",
+          "start_value": "60000",
+          "end_value": "66000",
+          "net_flow": "0",
+          "benchmark_weight_pct": "50",
+          "benchmark_return_pct": "8",
+          "valuation_reference": "synthetic/Direct Equity/valuations",
+          "benchmark_reference": "synthetic/Direct Equity/benchmark"
+        },
+        {
+          "asset_class": "Fixed Deposit",
+          "start_value": "40000",
+          "end_value": "41000",
+          "net_flow": "0",
+          "benchmark_weight_pct": "50",
+          "benchmark_return_pct": "2",
+          "valuation_reference": "synthetic/Fixed Deposit/valuations",
+          "benchmark_reference": "synthetic/Fixed Deposit/benchmark"
+        }
+      ]
+    }
+  ]
+}

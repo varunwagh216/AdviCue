@@ -1,0 +1,10 @@
+AdviCue validation
+
+From backend with dependencies installed:
+python -m pytest -q
+python -m app.scripts.validate_200_clients --output ../docs/BOOK_200_VALIDATION.json
+python -m app.scripts.verify_v4_release --live-ai --audio YOUR_CONSENTED_SAMPLE.wav --recording-consent --json ../docs/LOCAL_AI_VALIDATION.json
+
+The 200-client check is fully synthetic and isolated. Pilot measurements must be collected in the optional review measurement panel. No outcomes are prefilled.
+
+Evidence files are JSON manifests, not provider-document authentication. Examples remain illustrative after approval. Review original statements and valuation boundaries at every flow and rebalance. Match client ID, currency, taxes, fees and mandate. Benchmark rationale, source and effective coverage are mandatory. Returns are blocked until reconciliation and explicit advisor approval.

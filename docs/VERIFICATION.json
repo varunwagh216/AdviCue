@@ -1,0 +1,79 @@
+{
+  "edition": "AdviCue AI",
+  "generated_at": "2026-10-18T16:05:55.802080+00:00",
+  "python": "3.14.7",
+  "offline_dependency_installation": "passed; --no-index from local CPython 3.14 Windows wheels",
+  "backend_regression": {
+    "tests": 149,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 2,
+    "passed": 147
+  },
+  "final_focused_offline_and_scope_checks": {
+    "tests": 26,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "passed": 26
+  },
+  "test_count_note": "Focused checks overlap the full regression suite; counts must not be added. The final focused suite adds WAV normalization and unmatched-client cases.",
+  "browser": {
+    "passed": 13,
+    "failed": 0,
+    "compiled_frontend": true,
+    "external_browser_requests": 0,
+    "virtual_microphone_actual_whisper_cpp": "passed"
+  },
+  "production_build": "passed",
+  "migration_head": "0014_advisor_identity",
+  "assigned_clients": 20,
+  "synthetic_book": {
+    "clients": 200,
+    "expected_rule_matches": 167,
+    "unexpected": 0,
+    "missed": 0,
+    "next_day_duplicate_cases": 0
+  },
+  "real_local_ai": {
+    "actual_llama_brief_api": "passed",
+    "brief_clients": 6,
+    "brief_seconds": [
+      4.094,
+      4.848,
+      5.141,
+      4.722,
+      5.45,
+      5.64
+    ],
+    "actual_meeting_extraction_api": "passed",
+    "explicit_commitment_captured": true,
+    "note_remains_unapproved": true,
+    "actual_home_search_requests": 3,
+    "actual_whisper_upload_api": "passed",
+    "synthetic_word_error_rate": 0.0,
+    "reference_words": 29,
+    "transcribed_words": 29,
+    "speech_scope": "One generated English speech sample; not representative human speech or accuracy certification."
+  },
+  "home_voice_search": {
+    "provider": "whisper.cpp",
+    "transcript": "How many clients have systematic investment plans?",
+    "seconds": 2.58,
+    "fixture": "Locally generated synthetic English speech; not a human accuracy study.",
+    "search_matched_clients": 20
+  },
+  "runtime_downloads": false,
+  "llama_url_policy": "loopback HTTP only; redirects and environment proxies disabled",
+  "browser_network_policy": "connect-src 'self'; no external scripts, fonts or documentation CDNs",
+  "database": "local SQLite only",
+  "data_provenance": "20 assigned sample clients; source records and financial illustrative flags preserved. No real provider evidence or advisor pilot observations fabricated.",
+  "limitations": [
+    "Search supports documented records and filters; unsupported requests ask for clarification.",
+    "Recorded SIP history does not establish an active mandate.",
+    "Compressed meeting audio requires optional preinstalled local FFmpeg. Browser voice input needs no FFmpeg.",
+    "Generated audio tests do not establish human speech accuracy.",
+    "200-client scenarios are controlled synthetic validation, not a field study or concurrency certification."
+  ],
+  "readability_finishing": "Original font family and heading sizes preserved; smaller supporting text enlarged. Production build and desktop/mobile layout check passed."
+}

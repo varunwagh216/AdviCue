@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-10-18T16:00:08.197498+00:00",
+  "passed": true,
+  "book_clients": 200,
+  "other_organization_sentinels": 1,
+  "scenarios": {
+    "mandate_drift": 34,
+    "stale_valuation": 34,
+    "overdue_commitment": 33,
+    "goal_gap": 33,
+    "benchmark_lag": 33,
+    "no_trigger": 33
+  },
+  "expected_rule_matches": 167,
+  "unexpected_rule_matches": 0,
+  "missed_rule_matches": 0,
+  "arithmetic_reconciliations": 200,
+  "refresh_seconds": 0.254,
+  "repeat_refresh_new_cases": 0,
+  "client_analysis_latency_ms": {
+    "p50": 15.91,
+    "p95": 19.63,
+    "max": 68.95
+  },
+  "scope_checks_passed": 4,
+  "pilot_results_created": 0,
+  "limitations": "Generated controlled scenarios on one local machine. No live investor/provider data. Does not measure real-world false positives, advisor retention, concurrency capacity or advice outcomes.",
+  "next_day_refresh_new_cases": 0,
+  "local_ai_workflow": {
+    "actual_llama_brief_api": "passed",
+    "brief_clients": 6,
+    "brief_seconds": [
+      4.094,
+      4.848,
+      5.141,
+      4.722,
+      5.45,
+      5.64
+    ],
+    "actual_meeting_extraction_api": "passed",
+    "explicit_commitment_captured": true,
+    "note_remains_unapproved": true,
+    "actual_home_search_requests": 3,
+    "actual_whisper_upload_api": "passed",
+    "synthetic_word_error_rate": 0.0,
+    "reference_words": 29,
+    "transcribed_words": 29,
+    "speech_scope": "One generated English speech sample; not representative human speech or accuracy certification."
+  }
+}

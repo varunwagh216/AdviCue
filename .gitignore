@@ -1,0 +1,33 @@
+# Local environments and generated test output
+.venv/
+venv/
+node_modules/
+__pycache__/
+.pytest_cache/
+.test-tmp/
+test-results/
+playwright-report/
+*.pyc
+*.tsbuildinfo
+
+# Local configuration and all investor databases
+.env
+.env.*
+!.env.example
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Downloaded model runtimes and weights
+local_ai/bin/
+local_ai/whisper/
+local_ai/models/
+*.gguf
+
+# Runtime logs and local archives
+app-logs/
+local-ai-logs/
+*.log
+*.zip

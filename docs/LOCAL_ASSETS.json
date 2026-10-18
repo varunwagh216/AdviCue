@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-10-18T16:05:55.804397+00:00",
+  "assets": [
+    {
+      "path": "local_ai/models/Llama-3.2-1B-Instruct-Q4_K_M.gguf",
+      "bytes": 807694464,
+      "sha256": "6f85a640a97cf2bf5b8e764087b1e83da0fdb51d7c9fab7d0fece9385611df83"
+    },
+    {
+      "path": "local_ai/models/ggml-base.bin",
+      "bytes": 147951465,
+      "sha256": "60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe"
+    },
+    {
+      "path": "local_ai/bin/llama-server.exe",
+      "bytes": 9216,
+      "sha256": "7e236243c9b670c6a49410c03186fd575c57a0efe3fd8a21d8727503d571d5b6"
+    },
+    {
+      "path": "local_ai/whisper/whisper-cli.exe",
+      "bytes": 480256,
+      "sha256": "b7c6dc2e999a80bc2d23cd4c76701211f392ae55d5cabdf0d45eb2ca4faf09af"
+    }
+  ],
+  "text_runtime": "llama.cpp b11429 Win x64 CPU",
+  "speech_runtime": "whisper.cpp v1.7.6 Win x64 CPU",
+  "speech_archive_sha256": "0d2eca299c248f965bd0341bcb219db4b433c7f0c0ce2200d4df85765e8156a9",
+  "licenses": "local_ai/licenses",
+  "weights_downloaded_during_operation": false
+}
