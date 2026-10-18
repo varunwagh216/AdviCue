@@ -4,7 +4,7 @@ import { api, setCsrf, type AuthResponse, type UserInfo } from '../lib/api'
 interface AuthValue {
   user: UserInfo | null
   checking: boolean
-  login: () => Promise<void>
+  login: (email: string, password: string) => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -23,8 +23,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => { active = false }
   }, [])
 
-  const login = useCallback(async () => {
-    const { data } = await api.post<AuthResponse>('/auth/enter')
+  const login = useCallback(async (email: string, password: string) => {
+    const { data } = await api.post<AuthResponse>('/auth/login', { email, password })
     setUser(data.user)
     setCsrf(data.csrf_token)
   }, [])

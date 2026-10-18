@@ -4,7 +4,7 @@
 
 Judges should download **AdviCue_AI.zip** and the **Judges Setup and Run Guide** from [Releases](https://github.com/varunwagh216/AdviCue/releases), then extract the ZIP and follow the guide.
 
-The repository includes an approved fictional sample book in backend/sample-data. First setup copies it locally for empty installations without downloading an account database. Working databases, secrets and model weights remain excluded. Existing databases with records and their passwords are preserved. Do not upload real investor records. The compiled frontend and offline Python wheels are retained for reproducibility.
+This source repository deliberately excludes local SQLite databases, secrets, installed environments and downloaded model runtimes/weights. The release ZIP contains the supplied sample SQLite book. For a fresh source clone or GitHub Code ZIP, `SETUP_WINDOWS.bat` downloads that approved sample book automatically when no existing accounts or other records are present. Existing databases with records and their passwords are preserved. Do not upload real investor records. The compiled frontend and offline Python wheels are retained for reproducibility.
 
 
 A private advisor workspace with local AI text and voice search, client reviews, portfolio analysis, pattern detection, advice outcome reviews and follow-ups.
@@ -28,7 +28,7 @@ After setup, normal operation is offline. For later launches, run only:
 
 Close the backend from an older AdviCue installation if it uses port 8000. Keep your existing database backed up; this extracted folder has its own supplied SQLite database.
 
-Open **http://127.0.0.1:8000**. Click **Enter AdviCue**. No email or password is required. Anyone using this computer can open the local advisor workspace. The server stays on 127.0.0.1, with session and advisor-scoping checks retained.
+Open **http://127.0.0.1:8000**. Sign in with **advisor@advicue.local** / **Advisor2026!**.
 
 ## Home search
 

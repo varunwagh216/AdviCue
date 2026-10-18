@@ -77,11 +77,3 @@ def test_running_launcher_never_downloads_sample_database():
     connected=(root/'scripts/PREPARE_FIRST_RUN.ps1').read_text(encoding='utf-8')
     assert 'prepare_sample_database' not in start
     assert '-m app.scripts.prepare_sample_database --download' in connected
-
-def test_bundled_sample_needs_no_network(tmp_path,monkeypatch):
-    def forbidden(*args,**kwargs):raise AssertionError('Sample initialization must work offline')
-    monkeypatch.setattr(setup.urllib.request,'urlopen',forbidden)
-    target=tmp_path/'offline.db'
-    assert setup.prepare(target)=='SAMPLE_ACCOUNT_READY'
-    with sqlite3.connect(target) as db:
-        assert db.execute("SELECT COUNT(*) FROM users WHERE email='advisor@advicue.local'").fetchone()[0]==1
