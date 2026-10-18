@@ -4,7 +4,7 @@
 
 Judges should download **AdviCue_AI.zip** and the **Judges Setup and Run Guide** from [Releases](https://github.com/varunwagh216/AdviCue/releases), then extract the ZIP and follow the guide.
 
-This source repository deliberately excludes local SQLite databases, secrets, installed environments and downloaded model runtimes/weights. The release ZIP contains the supplied sample SQLite book; a source clone alone does not contain that database. Do not upload real investor records. To run a clone, first copy the sample `backend/advicue.db` from the release ZIP, then follow the setup instructions below. The included compiled frontend and offline Python wheels are retained for reproducibility.
+This source repository deliberately excludes local SQLite databases, secrets, installed environments and downloaded model runtimes/weights. The release ZIP contains the supplied sample SQLite book. For a fresh source clone or GitHub Code ZIP, `SETUP_WINDOWS.bat` downloads that approved sample book automatically when no existing accounts or other records are present. Existing databases with records and their passwords are preserved. Do not upload real investor records. The compiled frontend and offline Python wheels are retained for reproducibility.
 
 
 A private advisor workspace with local AI text and voice search, client reviews, portfolio analysis, pattern detection, advice outcome reviews and follow-ups.
@@ -18,7 +18,7 @@ Python **3.14 x64** must already be installed. Python 3.12 x64 is also supported
 .\RUN_WINDOWS.bat
 ```
 
-The first setup installs Python dependencies from the included local wheels and downloads llama.cpp, the Llama text model, whisper.cpp and the speech model. Keep internet connected until setup completes. **Model files are not included in this ZIP.** The compiled frontend is included; Node.js is only needed to edit and rebuild it.
+Stop any running AdviCue backend before setup. The first setup installs Python dependencies from the included local wheels, prepares the sample advisor account for a fresh empty database, and downloads llama.cpp, the Llama text model, whisper.cpp and the speech model. Keep internet connected until setup completes. **Model files are not included in this ZIP.** The compiled frontend is included; Node.js is only needed to edit and rebuild it.
 
 After setup, normal operation is offline. For later launches, run only:
 
