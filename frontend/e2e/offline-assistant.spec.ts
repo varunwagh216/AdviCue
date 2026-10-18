@@ -1,9 +1,8 @@
 import {expect,test} from '@playwright/test'
 import path from 'node:path'
-const email=process.env.E2E_ADVISOR_EMAIL,password=process.env.E2E_ADVISOR_PASSWORD
 const audio=path.resolve('../docs/validation/sip-search.wav')
 test.use({permissions:['microphone'],launchOptions:{args:['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream',`--use-file-for-fake-audio-capture=${audio}`]}})
-async function login(page:import('@playwright/test').Page){test.skip(!email||!password,'Set advisor credentials');await page.goto('/login');await page.getByLabel('Email address').fill(email!);await page.getByLabel('Password').fill(password!);await page.getByRole('button',{name:/Sign in to workspace/}).click();await expect(page.getByRole('navigation',{name:'Main navigation'})).toBeVisible()}
+async function login(page:import('@playwright/test').Page){await page.goto('/login');await page.getByRole('button',{name:/Enter AdviCue/}).click();await expect(page.getByRole('navigation',{name:'Main navigation'})).toBeVisible()}
 
 test('spoken question is transcribed by local whisper.cpp, reviewed, then searched',async({page})=>{
  test.setTimeout(90000);await login(page);await page.getByRole('button',{name:'Speak your question',exact:true}).click();await expect(page.getByRole('button',{name:'Stop recording',exact:true})).toBeVisible();await page.waitForTimeout(4400);await page.getByRole('button',{name:'Stop recording',exact:true}).click();await expect(page.getByLabel('Ask AdviCue AI')).toHaveValue(/systematic investment/i,{timeout:45000});await expect(page.locator('.home-results')).toHaveCount(0);await page.getByRole('button',{name:'Search with AdviCue AI'}).click();await expect(page.locator('.home-result-heading')).toContainText('recorded SIP contributions',{timeout:30000});await expect(page.locator('.home-result-card')).toHaveCount(20);await page.screenshot({path:'../docs/screenshots/voice-search.png',fullPage:true})

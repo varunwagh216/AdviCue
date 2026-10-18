@@ -36,6 +36,26 @@ def login(body: LoginRequest, response: Response, request: Request, db: Session 
     return AuthResponse(user=public_user(user), csrf_token=csrf)
 
 
+
+@router.post("/enter", response_model=AuthResponse)
+def enter_workspace(response: Response, request: Request, db: Session = Depends(get_db)):
+    """Open the single-machine advisor workspace without credentials."""
+    require_same_origin(request)
+    if not request.client or request.client.host not in {"127.0.0.1", "::1"}:
+        raise HTTPException(status_code=403, detail="Open AdviCue on this computer using 127.0.0.1")
+    user = db.scalar(select(User).where(User.email == settings.advisor_demo_operator_email.strip().lower()))
+    if user is None:
+        raise HTTPException(status_code=503, detail="Advisor workspace is not prepared. Stop AdviCue and run SETUP_WINDOWS.bat from this folder.")
+    if not user.is_active or user.role != "ADVISOR":
+        raise HTTPException(status_code=403, detail="The local advisor workspace is unavailable")
+    token, csrf = create_session(db, user)
+    response.set_cookie(COOKIE_NAME, token, httponly=True, secure=settings.cookie_secure,
+                        samesite="lax", max_age=settings.session_hours * 3600, path="/api/v1")
+    response.headers["Cache-Control"] = "no-store"
+    db.add(AuditEvent(organization_id=user.organization_id, actor_id=user.id, action="AUTH_LOCAL_ENTER"))
+    db.commit()
+    return AuthResponse(user=public_user(user), csrf_token=csrf)
+
 @router.get("/me", response_model=AuthResponse)
 def me(response: Response, session: LoginSession = Depends(get_login_session), db: Session = Depends(get_db)):
     response.headers["Cache-Control"] = "no-store"

@@ -27,6 +27,11 @@ def has_records(path:Path)->bool:
 
 
 def fetch_archive()->bytes:
+    bundled=Path(__file__).resolve().parents[2] / 'sample-data' / 'advicue.sqlite3'
+    if bundled.exists():
+        out=io.BytesIO()
+        with zipfile.ZipFile(out,'w') as archive:archive.writestr(SAMPLE_MEMBER,bundled.read_bytes())
+        return out.getvalue()
     request=urllib.request.Request(SAMPLE_URL,headers={'User-Agent':'AdviCue-first-time-setup'})
     with urllib.request.urlopen(request,timeout=120) as response:
         payload=response.read(32*1024*1024+1)
@@ -77,7 +82,7 @@ def main():
         raise SystemExit('Sample setup requires a local SQLite file')
     try:status=prepare(Path(url.database))
     except Exception as exc:raise SystemExit(f'Sample setup failed: {exc}. Existing records were preserved. Stop the backend before retrying.') from exc
-    if status=='SAMPLE_ACCOUNT_READY':print('Sample advisor account ready: advisor@advicue.local / Advisor2026!')
+    if status=='SAMPLE_ACCOUNT_READY':print('Advisor workspace ready. Click Enter AdviCue in the browser.')
     else:print('Existing records and passwords preserved. Use the account already registered in this database.')
 
 

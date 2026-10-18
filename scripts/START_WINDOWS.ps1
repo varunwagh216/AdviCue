@@ -25,12 +25,12 @@ New-Item -ItemType Directory -Force -Path $logs | Out-Null
 try {
  $health=Invoke-RestMethod 'http://127.0.0.1:8000/api/v1/health' -TimeoutSec 2
  if ($health.service -ne 'advicue-ai' -or $health.edition -ne 'AdviCue AI') { throw 'Port 8000 belongs to another service.' }
- Write-Host 'An AdviCue server already uses port 8000. Stop an older version before starting this release.' -ForegroundColor Yellow
+ throw 'Another AdviCue instance is already running.'
 } catch {
  $socket=New-Object System.Net.Sockets.TcpClient
  $occupied=$false
  try { $socket.Connect('127.0.0.1',8000);$occupied=$true } catch {} finally {$socket.Close()}
- if ($occupied) { throw 'Port 8000 is occupied. Stop that service before starting AdviCue.' }
+ if ($occupied) { throw 'Port 8000 is occupied. Stop the existing server or restart your PC, then launch this folder again.' }
  Start-Process -FilePath $python -ArgumentList @('-m','uvicorn','app.main:app','--host','127.0.0.1','--port','8000') -WorkingDirectory $backend -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logs 'backend.stdout.log') -RedirectStandardError (Join-Path $logs 'backend.stderr.log') | Out-Null
 }
 $ready=$false

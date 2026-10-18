@@ -1,0 +1,1 @@
+import{k as c,j as a,N as s}from"./index-6xFtsD66.js";function o(){const{pathname:e}=c();return a.jsxs("nav",{className:"advice-section-nav","aria-label":"Advice workspace",children:[a.jsx(s,{to:"/advice",className:()=>e.startsWith("/advice/follow-ups")?"":"active",children:"Advice records"}),a.jsx(s,{to:"/advice/follow-ups",children:"Follow-ups"})]})}export{o as A};

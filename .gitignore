@@ -31,3 +31,6 @@ app-logs/
 local-ai-logs/
 *.log
 *.zip
+
+# Approved fictional first-run sample; working databases remain ignored.
+!backend/sample-data/advicue.sqlite3

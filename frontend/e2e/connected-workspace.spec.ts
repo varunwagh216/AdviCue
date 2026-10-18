@@ -1,6 +1,5 @@
 import { expect,test } from '@playwright/test'
-const email=process.env.E2E_ADVISOR_EMAIL,password=process.env.E2E_ADVISOR_PASSWORD
-async function login(page:import('@playwright/test').Page){test.skip(!email||!password,'Set demo credentials');await page.goto('/login');await page.getByLabel('Email address').fill(email!);await page.getByLabel('Password').fill(password!);await page.getByRole('button',{name:/Sign in to workspace/}).click();await expect(page.getByRole('navigation',{name:'Main navigation'})).toBeVisible()}
+async function login(page:import('@playwright/test').Page){await page.goto('/login');await page.getByRole('button',{name:/Enter AdviCue/}).click();await expect(page.getByRole('navigation',{name:'Main navigation'})).toBeVisible()}
 test('home has greeting, dynamic counts and local AI search; Reviews is second',async({page})=>{
  await login(page);await expect(page.locator('h1')).toHaveText(/Good (morning|afternoon|evening)/);await expect(page.getByLabel('Your client book')).toContainText('20');await expect(page.getByLabel('Ask AdviCue AI')).toBeVisible();await expect(page.getByRole('button',{name:'Which clients need my attention?'})).toBeVisible()
  const nav=page.getByRole('navigation',{name:'Main navigation'}).getByRole('link');await expect(nav).toHaveCount(7);await expect(nav.nth(0)).toHaveText('Home');await expect(nav.nth(1)).toHaveText('Reviews');await expect(page.getByRole('navigation').getByRole('link',{name:'Pattern detection',exact:true})).toBeVisible();await page.screenshot({path:'../docs/screenshots/v6-home.png',fullPage:true})

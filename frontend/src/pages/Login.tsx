@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { ArrowRight, Eye, EyeOff, LockKeyhole, Radar, ShieldCheck, Sparkles } from 'lucide-react'
+import { ArrowRight, LockKeyhole, Radar, ShieldCheck, Sparkles } from 'lucide-react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Brand from '../components/Brand'
 import { useAuth } from '../context/AuthContext'
@@ -7,9 +7,6 @@ import { humanError } from '../lib/api'
 
 export default function Login() {
   const { user, login } = useAuth()
-  const [email, setEmail] = useState('advisor@advicue.local')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
@@ -19,7 +16,7 @@ export default function Login() {
     e.preventDefault()
     setError(null)
     setLoading(true)
-    try { await login(email, password); navigate('/', { replace: true }) }
+    try { await login(); navigate('/', { replace: true }) }
     catch (err) { setError(humanError(err)) }
     finally { setLoading(false) }
   }
@@ -44,19 +41,15 @@ export default function Login() {
       <div className="login-form-container">
         <div className="login-top-icon"><LockKeyhole size={23}/></div>
         <div className="login-eyebrow">WELCOME BACK</div>
-        <h2>Sign in to your workspace</h2>
-        <p className="login-intro">Enter your account credentials to access your workspace.</p>
+        <h2>Your advisor workspace</h2>
+        <p className="login-intro">Open your local workspace to review clients, advice and follow-ups.</p>
         <form onSubmit={submit} className="login-form">
-          <label htmlFor="email">Email address</label>
-          <input id="email" type="email" autoComplete="username" value={email} onChange={e=>setEmail(e.target.value)} placeholder="advisor@advicue.local" required />
-          <label htmlFor="password">Password</label>
-          <div className="password-field"><input id="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Enter your password" required /><button type="button" title="Show/hide password" onClick={()=>setShowPassword(!showPassword)}>{showPassword ? <EyeOff size={18}/> : <Eye size={18}/>}</button></div>
           {error && <div className="login-error" role="alert">{error}</div>}
-          <button className="sign-in-button" type="submit" disabled={loading}>{loading ? 'Signing in…' : 'Sign in to workspace'} <ArrowRight size={18}/></button>
+          <button className="sign-in-button" type="submit" disabled={loading}>{loading ? 'Opening workspace…' : 'Enter AdviCue'} <ArrowRight size={18}/></button>
         </form>
         <div className="login-hint"><ShieldCheck size={16}/><span>Offline advisor workspace · Financial records remain on this computer.</span></div>
       </div>
-      <div className="login-bottom-info">Secure access <span>·</span> Built with Llama</div>
+      <div className="login-bottom-info">Local access <span>·</span> Built with Llama</div>
     </div>
   </div>
 }
