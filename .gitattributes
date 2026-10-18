@@ -1,2 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Preserve submitted documents and audio without newline conversion
+submission-materials/**/*.pdf binary
+submission-materials/**/*.wav binary
+submission-materials/**/*.docx binary
+submission-materials/**/*.xlsx binary
