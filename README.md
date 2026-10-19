@@ -21,9 +21,11 @@ All AI processing uses local llama.cpp and whisper.cpp. Python analytics and SQL
 
 ## Advisor experience
 
-Home provides voice/text search and three next actions. Reviews filter by urgency, goal and status. Client workspaces have Overview, Portfolio & Goals, Advice & Outcomes and Meetings tabs. Advice timelines distinguish completed tasks from verified investment outcomes. Follow-ups have Today, Upcoming and Overdue views. A first-visit guide, accessible focus states, responsive navigation and live local-AI availability checks support the full workflow.
+Home provides voice/text search and three next actions. Reviews filter by urgency, goal and status. Client workspaces have Overview, Portfolio & Goals, Advice & Outcomes and Meetings tabs. Advice timelines distinguish completed tasks from verified investment outcomes. Follow-ups have Today, Upcoming and Overdue views. A first-visit guide, accessible focus states, responsive navigation support the full workflow.
 
 Validation details: docs/Product_Experience_Checks.md.
+
+See **START_HERE.md** for installation, troubleshooting and the walkthrough.
 
 ## Judge walkthrough
 

@@ -6,10 +6,11 @@ from app.core.security import verify_password
 from tests.conftest import sign_in
 
 
-def test_public_health_uses_db(client):
+def test_public_health_uses_db(client, monkeypatch):
+    monkeypatch.setenv("ADVICUE_INSTANCE_ID", "health-test-instance")
     response=client.get("/api/v1/health")
     assert response.status_code==200
-    assert response.json()=={"status":"ok", "service":"advicue-ai", "phase":9, "database":"connected"}
+    assert response.json()=={"status":"ok", "service":"advicue-ai", "phase":9, "database":"connected", "edition":"AdviCue AI", "instance_id":"health-test-instance"}
 
 
 def test_protected_dashboard_requires_login(client):
