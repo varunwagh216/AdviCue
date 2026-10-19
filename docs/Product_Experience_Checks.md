@@ -25,3 +25,9 @@ Compact typography, narrower navigation, three summary cards, shorter action row
 Home now has five actionable AI suggestions and a larger greeting; the privacy sentence under its search input is removed. Reviews explicitly positions the detail panel in row one beside the queue on desktop, including wide and compact windows. Clients and Patterns share the same typography, card surfaces and navy/teal palette. Ask AI, Client Briefs and Meetings are separate views of one AI workspace. Ask AI returns actual search results with client links and evidence scope; meeting agenda buttons populate editable text and never save or approve records automatically. All feature entry points use existing authorized client records, without per-item Sample or Illustrative prefixes. Underlying provenance is preserved.
 
 Validation covers right-hand review layout at 1600, 1280, 1000 and 900 pixels; Home suggestions and typography; record-linked feature examples; real SIP search answers; editable meeting agendas; mobile layouts; and the legacy-text regression.
+
+## Navy palette and simpler page purpose
+
+Removed the cross-page client-example strips and their component. Top navigation search expands to 680px where space permits and remains responsive. The navy identity now covers sidebar gradients, active navigation, page headings, primary buttons and selected controls. Home layout remains unchanged. Patterns leads with its purpose, a plain-language finding and the next review action; detailed statistical methods are expandable. Data management separates holdings intake from follow-up exports and explains the three-step preview/review/save flow. Import permissions and confirmation requirements are preserved.
+
+Validation: production build and 13 UI/copy checks, including search width, palette, absence of removed strips, pattern purpose, template download, mobile layout and existing advisor workflows.

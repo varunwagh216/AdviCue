@@ -1,4 +1,3 @@
-import ExploreWorkflows from '../components/ExploreWorkflows'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { compactINR, type BookSummary } from '../components/ConceptCharts'
@@ -41,7 +40,7 @@ export default function Investors() {
   },[selected])
   const filtered=investors.filter(i=>`${i.display_name} ${i.id} ${i.primary_goal||''} ${i.source_advisor_code??''}`.toLowerCase().includes(query.toLowerCase()) && (riskFilter==='ALL'||i.risk_profile===riskFilter))
   const fmtAmount=(v:string|null)=>v===null?'Not available':`₹${Number(v).toLocaleString('en-IN',{maximumFractionDigits:2})}`
-  return <div className="page-fade"><ExploreWorkflows area="clients"/>
+  return <div className="page-fade">
     <div className="standard-heading"><h1>My clients</h1><p>One client workspace for holdings, goals, agreed advice and meeting knowledge.</p></div>
     {error&&<div className="error-banner" role="alert"><CircleAlert size={18}/>{error}</div>}
     {!selected&&<div className="overview-metrics concept-investor-metrics">{[{name:'Total clients',value:investors.length},{name:'Recorded holdings',value:book?compactINR(book.recorded_holdings_total):'—'},{name:'Average recorded holding',value:book&&investors.length?compactINR(String(Number(book.recorded_holdings_total)/investors.length)):'—'},{name:'Risk profiles',value:Object.keys(book?.risk_counts||{}).length}].map(m=><div className="overview-metric" key={m.name}><span>{m.name}</span><strong>{loading?'—':m.value}</strong></div>)}</div>}

@@ -1,4 +1,3 @@
-import ExploreWorkflows from '../components/ExploreWorkflows'
 import DataConnections from '../components/DataConnections'
 import { useCallback, useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import { AlertCircle, AlertTriangle, ArrowRight, CheckCircle2, ClipboardCheck, Database, FileSpreadsheet, FolderOpen, LockKeyhole, RefreshCw, ShieldCheck, UploadCloud } from 'lucide-react'
@@ -115,11 +114,11 @@ export default function DataTrust() {
   }
 
   if(capabilityLoading)return <div className="panel-card dt-placeholder">Checking local data-management permission…</div>
-  if(!supervisor)return <div className="page-fade"><ExploreWorkflows area="data"/><div className="standard-heading"><h1>Data tools</h1><p>Connect your assigned client records and follow-ups.</p></div><DataConnections/><div className="panel-card v6-record"><LockKeyhole size={24}/><p>Organization-wide workbook imports remain restricted to the authorized operator. CSV intake is limited to your assigned clients.</p></div></div>
+  if(!supervisor)return <div className="page-fade"><div className="standard-heading"><h1>Data management</h1><p>Keep client holdings current and export follow-ups to the tools you already use.</p></div><DataConnections/><div className="panel-card v6-record"><LockKeyhole size={24}/><p>You can update holdings for your assigned clients here. Full-book Excel imports require the authorized data operator.</p></div></div>
 
-  return <div className="page-fade"><div className="standard-heading"><h1>Data tools</h1><p>Import source data and inspect validation before updating client records.</p><div className="focus-support-links"><Link to="/activity">Activity history</Link><a href="/examples/validation-guide.txt" download>Validation guide</a></div></div>
+  return <div className="page-fade"><div className="standard-heading"><h1>Data management</h1><p>Upload holdings, check the preview, then save reviewed records to update your client views.</p><div className="focus-support-links"><Link to="/activity">Activity history</Link><a href="/examples/validation-guide.txt" download>Validation guide</a></div></div>
     <DataConnections/>
-    <details className="panel-card v6-record"><summary>Advanced workbook import and source tools</summary>
+    <details className="panel-card v6-record"><summary>Excel imports and validation history</summary>
     <div className="dt-grid">
       <div className="panel-card dt-upload"><div className="dt-card-top"><div className="dt-card-icon"><UploadCloud size={22}/></div><div><h3>Upload workbook</h3><p>Four sheets · .xlsx · Maximum 10 MB</p></div></div>
         <form onSubmit={upload} className="dt-upload-form">

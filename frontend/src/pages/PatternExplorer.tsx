@@ -1,6 +1,5 @@
-import ExploreWorkflows from '../components/ExploreWorkflows'
 import { useCallback, useEffect, useState } from 'react'
-import { AlertTriangle, ArrowRight, BarChart3, CircleAlert, RefreshCw, Search, ShieldCheck } from 'lucide-react'
+import { AlertTriangle, ArrowRight, CircleAlert, RefreshCw, Search, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { api, formatINR, humanError, type PatternResponse, type ScanResponse } from '../lib/api'
 import { ruleName, caseReason, assetName } from '../lib/display'
@@ -40,31 +39,31 @@ export default function PatternExplorer() {
     }catch(e){setError(humanError(e))}
     finally{setScanning(false)}
   }
-  return <div className="page-fade"><ExploreWorkflows area="patterns"/>
-    <div className="standard-heading"><h1>Pattern detection</h1><p>Shared portfolio signals across investors.</p></div>
+  return <div className="page-fade">
+    <div className="standard-heading"><h1>Pattern detection</h1><p>Find clients with similar portfolio concerns, understand the shared issue, and review them together.</p></div>
     {error&&<div className="error-banner" role="alert"><CircleAlert size={18}/>{error}</div>}
     {notice&&<div className="dt-notice"><ShieldCheck size={18}/>{notice}</div>}
-    <div className="px-topbar panel-card"><div><strong>Portfolio pattern scan</strong><p>Compare investors with similar risk profiles.</p></div>
+    <div className="px-topbar panel-card"><div><strong>Spot a shared concern. Review the clients behind it.</strong><p>These findings compare dated holdings across clients with similar risk profiles.</p></div>
       {canScan ? <button className="dt-primary" onClick={scan} disabled={scanning}><RefreshCw size={16}/>{scanning?'Scanning…':'Run pattern scan'}</button>
-        : <span className="px-readonly"><ShieldCheck size={15}/> Saved patterns · Client-scoped</span>}
+        : <span className="px-readonly"><ShieldCheck size={15}/> Latest saved findings</span>}
     </div>
     {loading?<div className="panel-card dt-placeholder">Loading saved findings…</div>:!data?.items.length?<div className="panel-card dt-placeholder"><Search size={38}/><strong>No matching patterns in the latest scan</strong><span>{data?.message||'Import and validate holdings, then run a new pattern scan.'}</span></div>:
       data.items.map(pattern=><div className="panel-card px-pattern" key={pattern.id}>
-        <div className="px-pattern-head"><div><h2>{ruleName(pattern.rule_id)}</h2><p>{caseReason(pattern.evidence_summary)}</p></div><span className="dt-status staged">REVIEW SIGNAL</span></div>
+        <div className="px-pattern-head"><div><h2>{ruleName(pattern.rule_id)}</h2><p>{pattern.rule_id==='PAT_PEER_EQ_FD_DEVIATION'?'This group holds less equity and more fixed deposits than similar clients. Check whether the allocation still fits each client’s goals.':caseReason(pattern.evidence_summary)}</p></div><span className="dt-status staged">REVIEW SIGNAL</span></div>
         <div className="px-metrics">
-          <div><strong>{pattern.member_count}</strong><span>Investors in group</span></div>
-          {pattern.advisor_count!==null&&<div><strong>{pattern.advisor_count}</strong><span>Source advisors represented</span></div>}
-          <div><strong>{formatINR(pattern.recorded_value_total)}</strong><span>Aggregate recorded holdings</span></div>
-          <div><strong>{pattern.as_of_date}</strong><span>Holdings source date</span></div>
+          <div><strong>{pattern.member_count}</strong><span>Clients in this group</span></div>
+          
+          <div><strong>{formatINR(pattern.recorded_value_total)}</strong><span>Recorded group holdings</span></div>
+          <div><strong>{pattern.as_of_date}</strong><span>Records dated</span></div>
         </div>
-        <div className="px-rule-meta"><BarChart3 size={16}/> {pattern.as_of_date} · Anonymous group totals</div>
-        <div className="px-review-note"><AlertTriangle size={19}/><span>{caseReason(pattern.interpretation)}</span></div>
-        <details className="pattern-clients"><summary>Review these clients · {pattern.members.length} assigned matches</summary><div className="dt-list-heading"><h3>My assigned investor matches</h3><span>{pattern.members.length} matches</span></div>
+        <details className="pattern-method"><summary>How this finding was identified</summary><p>{caseReason(pattern.evidence_summary)}</p><p>{caseReason(pattern.interpretation)}</p></details>
+        <div className="px-review-note"><AlertTriangle size={19}/><span><strong>Next step:</strong> Open the client list below. Check agreed allocation, upcoming cash needs and source dates before recommending a change.</span></div>
+        <details className="pattern-clients"><summary>Review these clients · {pattern.members.length} assigned matches</summary><div className="dt-list-heading"><h3>Clients to review</h3><span>{pattern.members.length} matches</span></div>
         <div className="investor-table"><table><thead><tr><th>Investor</th><th>Equity</th><th>Fixed deposits</th><th>Recorded value</th><th>Source rows</th><th>Review</th></tr></thead><tbody>
           {pattern.members.map(m=><tr key={m.investor_id}><td><strong>{names[m.investor_id]||'Assigned client'}</strong></td><td>{m.equity_pct}%</td><td>{m.fixed_deposit_pct}%</td><td>{formatINR(m.recorded_value)}</td><td>{m.source_row_ids.length} holdings</td><td><Link className="px-investor-link" to={`/investors?selected=${encodeURIComponent(m.investor_id)}`}>Review client <ArrowRight size={14}/></Link></td></tr>)}
-        </tbody></table></div></details><div className="advc-evidence-note"><ShieldCheck size={17}/> The group figures are anonymous aggregates. Only your assigned investors are listed or accessible.</div>
+        </tbody></table></div></details><div className="advc-evidence-note"><ShieldCheck size={17}/> A pattern is a reason to review—not evidence of poor performance. Only your assigned clients can be opened.</div>
       </div>)}
-    <details className="focus-disclosure panel-card focus-panel"><summary>Source-book coverage and supporting diagnostics</summary>
+    <details className="focus-disclosure panel-card focus-panel"><summary>Additional checks and data coverage</summary>
     {!!tail&&<div className="panel-card px-pattern"><h2>Overlooked investors</h2>
       <p><strong>{tail.portfolio_review_investors}</strong> investors have active portfolio-review cases in the {tail.investors_ranked}-investor source book. <strong>{tail.portfolio_reviews_in_top_twenty}</strong> are among the largest 20 accounts; <strong>{tail.portfolio_reviews_outside_top_twenty}</strong> rank below the largest 20 by recorded holdings.</p><p><strong>{tail.verification_investors}</strong> investors separately have data-verification cases. These are not findings of poor investment performance.</p><p className="concept-footnote">Source-book ranks use the full imported book. Your workspace shows the clients assigned to you.</p>
       
@@ -83,3 +82,4 @@ export default function PatternExplorer() {
     </details>
   </div>
 }
+
