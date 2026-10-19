@@ -31,3 +31,5 @@ app-logs/
 local-ai-logs/
 *.log
 *.zip
+
+!backend/sample-data/advicue.sqlite3

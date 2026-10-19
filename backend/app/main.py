@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
@@ -53,7 +54,7 @@ def health(db: Session = Depends(get_db)):
         db.execute(text("SELECT 1"))
     except Exception as e:
         raise HTTPException(status_code=503, detail="Database unavailable") from e
-    return {"status": "ok", "service": "advicue-ai", "edition":"AdviCue AI", "phase": 9, "database": "connected"}
+    return {"status": "ok", "service": "advicue-ai", "edition":"AdviCue AI", "phase": 9, "database": "connected", "instance_id": os.getenv("ADVICUE_INSTANCE_ID", "")}
 
 
 @app.middleware("http")

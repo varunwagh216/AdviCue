@@ -27,11 +27,12 @@ def has_records(path:Path)->bool:
 
 
 def fetch_archive()->bytes:
-    request=urllib.request.Request(SAMPLE_URL,headers={'User-Agent':'AdviCue-first-time-setup'})
-    with urllib.request.urlopen(request,timeout=120) as response:
-        payload=response.read(32*1024*1024+1)
-    if len(payload)>32*1024*1024:raise ValueError('Sample package exceeds the download limit')
-    return payload
+    bundled=Path(__file__).resolve().parents[2]/'sample-data'/'advicue.sqlite3'
+    if not bundled.is_file():raise ValueError('Bundled sample database missing. Extract the complete latest project ZIP.')
+    out=io.BytesIO()
+    with zipfile.ZipFile(out,'w') as archive:archive.writestr(SAMPLE_MEMBER,bundled.read_bytes())
+    return out.getvalue()
+
 
 
 def prepare(path:Path,fetch=fetch_archive)->str:
