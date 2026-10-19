@@ -1,0 +1,28 @@
+.brand-lockup { display: flex; align-items: center; gap: 10px; }
+.brand-lockup .brand-symbol { width: 34px; height: 34px; flex-shrink: 0; }
+.brand-lockup .brand-name { white-space: nowrap; color: #fff; font-weight: 700; }
+.brand-lockup .brand-name span { color: inherit; }
+.prototype-layout .sidebar-brand { padding: 28px 16px 30px; }
+.prototype-layout .sidebar-brand .brand-name { font-size: 20px; letter-spacing: -.6px; }
+.prototype-layout .sidebar-brand .brand-symbol { width: 30px; height: 30px; }
+.prototype-layout .concept-sidebar-bottom { padding: 14px 12px 18px; }
+.prototype-layout .concept-sidebar-user { display: grid; grid-template-columns: 34px minmax(0,1fr) 32px; gap: 9px; align-items: center; padding: 14px 8px; border: 1px solid #ffffff24; border-radius: 12px; background: #ffffff09; margin: 0; }
+.prototype-layout .concept-sidebar-user .client-avatar { width: 34px; height: 34px; background: #d8edf5; color: #123c58; font-size: 14px; font-weight: 700; }
+.prototype-layout .concept-sidebar-user > div { min-width: 0; }
+.prototype-layout .concept-sidebar-user strong { display: block; font-size: 14px; line-height: 1.4; color: #f5fbff; overflow-wrap: anywhere; }
+.prototype-layout .concept-sidebar-user small { display: block; font-size: 12px; line-height: 1.5; color: #b7ccdd; margin-top: 3px; }
+.prototype-layout .concept-sidebar-user button { display: grid; place-items: center; width: 32px; height: 40px; padding: 0; border: 0; border-radius: 7px; color: #c6ddeb; background: transparent; }
+.prototype-layout .concept-sidebar-user button:hover { background: #ffffff15; color: white; }
+.login-page .login-left-top .brand-symbol { width: 54px; height: 50px; }
+.login-page .login-left-top .brand-lockup { gap: 14px; }
+@media (max-width: 820px) {
+  .login-page .login-left-top .brand-symbol { width: 38px; height: 36px; }
+}
+
+.prototype-layout .concept-sidebar-bottom { width: 100%; box-sizing: border-box; }
+.prototype-layout .concept-sidebar-user { width: 100%; max-width: none; box-sizing: border-box; }
+.prototype-layout .concept-sidebar-user strong, .prototype-layout .concept-sidebar-user small { white-space: normal; text-overflow: clip; max-width: none; overflow: visible; }
+
+.prototype-layout .concept-sidebar-bottom { left: 0; right: 0; }
+
+.prototype-layout .concept-sidebar-bottom { margin: auto 0 0; flex-shrink: 0; }

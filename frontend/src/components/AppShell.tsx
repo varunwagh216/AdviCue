@@ -1,7 +1,6 @@
 import { useEffect,useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Home, Layers3, Bell, BrainCircuit, ClipboardCheck, Database, LogOut, Menu, Radar, Search, Users, X } from 'lucide-react'
-import LocalStatus from './LocalStatus'
 import Brand from './Brand'
 import { useAuth } from '../context/AuthContext'
 
@@ -46,7 +45,7 @@ export default function AppShell(){
           <item.icon size={19} strokeWidth={1.85}/><span>{item.label}</span>
         </NavLink>)}
       </nav>
-      <div className="concept-sidebar-bottom"><LocalStatus/><div className="concept-sidebar-user"><span className="client-avatar">{(user?.name||'A').split(' ').map(s=>s[0]).slice(0,2).join('')}</span><div><strong>{user?.name}</strong><small>Financial advisor</small></div><button onClick={signOut} disabled={signingOut} aria-label="Sign out"><LogOut size={16}/></button></div></div>
+      <div className="concept-sidebar-bottom"><div className="concept-sidebar-user" aria-label="Advisor account"><span className="client-avatar">{(user?.name||'A').split(' ').map(s=>s[0]).slice(0,2).join('')}</span><div><strong title={user?.name}>{user?.name||'Advisor'}</strong><small>Financial advisor</small></div><button onClick={signOut} disabled={signingOut} aria-label="Sign out" title="Sign out"><LogOut size={16}/></button></div></div>
 
     </aside>
     <a className="skip-link" href="#workspace-content">Skip to content</a><main className="main-wrap">
