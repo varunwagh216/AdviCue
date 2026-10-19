@@ -41,14 +41,14 @@ export default function Investors() {
   const filtered=investors.filter(i=>`${i.display_name} ${i.id} ${i.primary_goal||''} ${i.source_advisor_code??''}`.toLowerCase().includes(query.toLowerCase()) && (riskFilter==='ALL'||i.risk_profile===riskFilter))
   const fmtAmount=(v:string|null)=>v===null?'Not available':`₹${Number(v).toLocaleString('en-IN',{maximumFractionDigits:2})}`
   return <div className="page-fade">
-    <div className="standard-heading"><h1>My Investors</h1><p>Holdings, performance and goals.</p></div>
+    <div className="standard-heading"><h1>My Investors</h1><p>One client workspace for holdings, goals, agreed advice and meeting knowledge.</p></div>
     {error&&<div className="error-banner" role="alert"><CircleAlert size={18}/>{error}</div>}
     {!selected&&<div className="overview-metrics concept-investor-metrics">{[{name:'Total clients',value:investors.length},{name:'Recorded holdings',value:book?compactINR(book.recorded_holdings_total):'—'},{name:'Average recorded holding',value:book&&investors.length?compactINR(String(Number(book.recorded_holdings_total)/investors.length)):'—'},{name:'Risk profiles',value:Object.keys(book?.risk_counts||{}).length}].map(m=><div className="overview-metric" key={m.name}><span>{m.name}</span><strong>{loading?'—':m.value}</strong></div>)}</div>}
     {selected?<>
       <button className="dt-back" onClick={()=>setSelected(null)}><ArrowLeft size={17}/> Back to investors</button>
       {detailsLoading?<div className="panel-card dt-placeholder">Loading source records…</div>:details&&<>
-        <div className="dt-person-header panel-card"><div><div className="eyebrow">{details.investor.id}</div><h2>{details.investor.display_name}</h2><p>{details.investor.city??'City unavailable'} · {details.investor.risk_profile??'Risk profile not available'} risk profile</p></div></div>
-        <FinancialPanel investorId={selected}/>
+        <div className="dt-person-header panel-card"><div><div className="eyebrow">{details.investor.id}</div><h2>{details.investor.display_name}</h2><p>{details.investor.primary_goal||'Goal not recorded'} · {details.investor.city??'City unavailable'} · {details.investor.risk_profile??'Risk profile not available'} risk profile</p></div></div>
+        <FinancialPanel key={selected} investorId={selected}/>
         <details className="panel-card focus-panel focus-disclosure"><summary>Instrument-level source holdings</summary>
           {details.holdings.length===0?<div className="dt-placeholder">No holding records available</div>:<div className="investor-table"><table><thead><tr><th>Instrument</th><th>Asset class</th><th>Recorded value</th><th>As-of date</th></tr></thead><tbody>{details.holdings.map(h=><tr key={h.source_row_id}><td><strong>{h.instrument_name}</strong></td><td>{h.asset_class}</td><td>{fmtAmount(h.current_value)}</td><td>{h.as_of_date}</td></tr>)}</tbody></table></div>}
         </details>

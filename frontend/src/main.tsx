@@ -20,3 +20,5 @@ import './concept-board.css'
 import './focused-workspace.css'
 
 import './workspace.css'
+
+import './product-experience.css'

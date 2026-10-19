@@ -5,6 +5,7 @@ import { api, formatINR, humanError, type PatternResponse, type ScanResponse } f
 import { ruleName, caseReason, assetName } from '../lib/display'
 
 export default function PatternExplorer() {
+  const [names,setNames]=useState<Record<string,string>>({});useEffect(()=>{void api.get<{items:Array<{id:string;display_name:string}>}>('/investors').then(r=>setNames(Object.fromEntries(r.data.items.map(c=>[c.id,c.display_name])))).catch(()=>{})},[]);
   const [data,setData]=useState<PatternResponse|null>(null)
   const [loading,setLoading]=useState(true)
   const [scanning,setScanning]=useState(false)
@@ -57,10 +58,10 @@ export default function PatternExplorer() {
         </div>
         <div className="px-rule-meta"><BarChart3 size={16}/> {pattern.as_of_date} · Anonymous group totals</div>
         <div className="px-review-note"><AlertTriangle size={19}/><span>{caseReason(pattern.interpretation)}</span></div>
-        <div className="dt-list-heading"><h3>My assigned investor matches</h3><span>{pattern.members.length} matches</span></div>
+        <details className="pattern-clients"><summary>Review these clients · {pattern.members.length} assigned matches</summary><div className="dt-list-heading"><h3>My assigned investor matches</h3><span>{pattern.members.length} matches</span></div>
         <div className="investor-table"><table><thead><tr><th>Investor</th><th>Equity</th><th>Fixed deposits</th><th>Recorded value</th><th>Source rows</th><th>Review</th></tr></thead><tbody>
-          {pattern.members.map(m=><tr key={m.investor_id}><td><strong>{m.investor_id}</strong></td><td>{m.equity_pct}%</td><td>{m.fixed_deposit_pct}%</td><td>{formatINR(m.recorded_value)}</td><td>{m.source_row_ids.length} holdings</td><td><Link className="px-investor-link" to={`/investors?selected=${encodeURIComponent(m.investor_id)}`}>Investor 360° <ArrowRight size={14}/></Link></td></tr>)}
-        </tbody></table></div><div className="advc-evidence-note"><ShieldCheck size={17}/> The group figures are anonymous aggregates. Only your assigned investors are listed or accessible.</div>
+          {pattern.members.map(m=><tr key={m.investor_id}><td><strong>{names[m.investor_id]||'Assigned client'}</strong></td><td>{m.equity_pct}%</td><td>{m.fixed_deposit_pct}%</td><td>{formatINR(m.recorded_value)}</td><td>{m.source_row_ids.length} holdings</td><td><Link className="px-investor-link" to={`/investors?selected=${encodeURIComponent(m.investor_id)}`}>Review client <ArrowRight size={14}/></Link></td></tr>)}
+        </tbody></table></div></details><div className="advc-evidence-note"><ShieldCheck size={17}/> The group figures are anonymous aggregates. Only your assigned investors are listed or accessible.</div>
       </div>)}
     <details className="focus-disclosure panel-card focus-panel"><summary>Source-book coverage and supporting diagnostics</summary>
     {!!tail&&<div className="panel-card px-pattern"><h2>Overlooked investors</h2>

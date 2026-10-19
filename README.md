@@ -18,3 +18,9 @@ Log in with **advisor@advicue.local** / **Advisor2026!**. A fictional sample boo
 The older judge guide uses port 8000; use the launcher's URL if it selects another port. Keep login credentials as above. Supporting materials are distributed separately from the runnable application.
 
 All AI processing uses local llama.cpp and whisper.cpp. Python analytics and SQLite remain local. No setup can guarantee compatibility with every Windows installation.
+
+## Advisor experience
+
+Home provides voice/text search and three next actions. Reviews filter by urgency, goal and status. Client workspaces have Overview, Portfolio & Goals, Advice & Outcomes and Meetings tabs. Advice timelines distinguish completed tasks from verified investment outcomes. Follow-ups have Today, Upcoming and Overdue views. A first-visit guide, accessible focus states, responsive navigation and live local-AI availability checks support the full workflow.
+
+Validation details: docs/Product_Experience_Checks.md.

@@ -69,9 +69,18 @@ def ai_status(user: User = Depends(current_user)):
         configured = True
     except LocalModelError:
         configured = False
+    state='NEEDS_SETUP'
+    if configured:
+        import httpx
+        try:
+            with httpx.Client(timeout=2,trust_env=False,follow_redirects=False) as client:
+                response=client.get(local_llama_cpp_url()+'/health')
+            if response.status_code==200:state='READY'
+            elif response.status_code==503:state='STARTING'
+        except httpx.HTTPError:pass
     from app.ai.speech import speech_assets
     exe,model=speech_assets()
-    return {'llama_cpp_local_config_valid': configured, 'provider': 'llama.cpp', 'model': settings.llama_cpp_model,
+    return {'runtime_state':state,'llama_cpp_local_config_valid': configured, 'provider': 'llama.cpp', 'model': settings.llama_cpp_model,
             'transcription_provider':'whisper.cpp','transcription_assets_present':exe.is_file() and model.is_file(),
             'transcription_model': model.name,
             'note': 'Configured does not mean the local model is installed or currently available.'}
