@@ -61,6 +61,18 @@ def search(payload:SearchInput,request:Request,user:User=Depends(csrf_protected)
     require_same_origin(request)
     if user.role!='ADVISOR':raise HTTPException(status_code=403,detail='Advisor search required')
     query=payload.query.strip();q=query.casefold();mode='LOCAL_AI';warning=None
+    from app.services.assistant_answers import is_explanation, explain
+    from sqlalchemy import select
+    from app.models import Investor
+    assigned=db.scalars(select(Investor).where(Investor.organization_id==user.organization_id,Investor.advisor_id==user.id)).all()
+    named_clients=[c for c in assigned if c.id.casefold() in q or c.display_name.casefold() in q or re.search(r'\b'+re.escape(c.display_name.split()[0].casefold())+r'\b',q)]
+    if is_explanation(query) and not named_clients and not re.search(r'\b(?:inv\d+|[a-z]-\d{3})\b',q):
+        return {'query':query,**explain(query)}
+    # Deterministic calculations need no generative routing call.
+    from app.services.assistant_facts import query_facts
+    calculated=query_facts(query,user,db)
+    if calculated:
+        return {'query':query,'mode':'RECORD_SEARCH','warning':None,**calculated}
     intent='FOLLOW_UPS' if any(x in q for x in ('follow','task','call due')) else 'REVIEWS' if 'review' in q else 'ATTENTION' if any(x in q for x in ('attention','urgent','priority')) else 'ADVICE' if 'advice' in q else 'PATTERNS' if 'pattern' in q else 'TODAY' if any(x in q for x in ('today','morning','day')) else 'CLIENT'
     term=''
     try:
@@ -70,12 +82,9 @@ def search(payload:SearchInput,request:Request,user:User=Depends(csrf_protected)
         if isinstance(proposed,str) and proposed.strip() and proposed.casefold() in q:term=proposed.strip().casefold()
     except LocalModelError:
         mode='RECORD_SEARCH';warning='Local AI is unavailable. These are direct matches from your assigned records.'
-    from app.services.assistant_facts import query_facts
-    calculated=query_facts(query,user,db)
-    if calculated:
-        return {'query':query,'mode':mode,'warning':warning,**calculated}
     clients,reviews,tasks=home_data(user,db);names={c['id']:c['display_name'] for c in clients}
     mentioned=[c for c in clients if c['display_name'].casefold() in q or c['id'].casefold() in q]
+    if not mentioned and named_clients:mentioned=[c for c in clients if c['id'] in {n.id for n in named_clients}]
     if not mentioned and term:mentioned=[c for c in clients if term in f"{c['display_name']} {c['id']} {c['risk_profile'] or ''} {c['primary_goal'] or ''}".casefold()]
     if not mentioned and intent=='CLIENT':
         words=[w for w in re.findall(r'[\w-]+',q) if len(w)>=3 and w not in {'show','client','clients','about','portfolio','their','please','tell','what','which','with','have','investor','investors','does','stand','where','many','profiles','profile','how','are','the','and','for','that','need'}]
@@ -120,6 +129,8 @@ def search(payload:SearchInput,request:Request,user:User=Depends(csrf_protected)
             if ids and a['investor_id'] not in ids:continue
             cards.append({'id':a['id'],'kind':'ADVICE','client_name':names.get(a['investor_id'],'Assigned client'),'title':a['recommendation'],'detail':a['expected_outcome'] or a['rationale'],'date':a['review_date'],'href':'/advice/'+a['id']})
     if intent=='PATTERNS':cards=[{'id':'patterns','kind':'PATTERNS','client_name':None,'title':'Open pattern detection','detail':'Review the dated patterns and supporting evidence for your assigned clients.','date':None,'href':'/patterns'}]
+    if intent=='CLIENT' and not cards and not re.search(r'\b(client|investor|portfolio|sip|sips|aum|holdings|allocation|profiles?|inv\d+|[a-z]-\d{3})\b',q):
+        return {'query':query,**explain(query)}
     count=len(cards)
     return {'query':query,'intent':intent,'mode':mode,'warning':warning,'answer':f"Found {count} recorded result{'s' if count!=1 else ''} in your assigned workspace." if cards else 'No assigned records matched this request. Try a client name, a goal, reviews or follow-ups.',
         'matched_count':count,'items':cards[:30],'note':('Showing the first 30 matches. Narrow your question to see others. ' if count>30 else '')+'AI interprets the request; names, dates, amounts and links come from scoped records. Results are review prompts, not investment recommendations.'}

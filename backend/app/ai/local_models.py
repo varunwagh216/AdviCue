@@ -39,7 +39,8 @@ def local_llm_json(system: str, facts: dict, *, max_response_chars: int = 5000, 
     # their existing generous budget; never truncate financial evidence inputs.
     properties = (response_schema or {}).get('properties', {})
     is_router = set(properties) == {'intent', 'client_search'}
-    token_budget = 512 if is_router else (1400 if response_schema else 750)
+    is_explanation = set(properties) == {'answer'}
+    token_budget = 512 if (is_router or is_explanation) else (1400 if response_schema else 750)
     # Compact serialization preserves every value while avoiding whitespace
     # tokens in long portfolio facts and meeting contexts.
     context = json.dumps(facts, ensure_ascii=False, separators=(',', ':'))
@@ -54,7 +55,8 @@ def local_llm_json(system: str, facts: dict, *, max_response_chars: int = 5000, 
                 ],
                 'response_format': {'type': 'json_object', **({'schema':response_schema} if response_schema else {})},
                 'stream': False,
-                'temperature': 0,
+                'temperature': 0.2 if is_explanation else 0,
+                **({'repeat_penalty':1.12} if is_explanation else {}),
                 'max_tokens': token_budget,
                 'seed': 42,
                 # Each client may have a different provenance enum/schema.
