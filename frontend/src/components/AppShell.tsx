@@ -11,14 +11,14 @@ const navigation = [
   {label:'Clients',path:'/investors',icon:Users},
   {label:'Patterns',path:'/patterns',icon:Layers3},
   {label:'Advice',path:'/advice',icon:ClipboardCheck},
-  {label:'Meetings',path:'/local-ai',icon:BrainCircuit},
+  {label:'Ask AI',path:'/local-ai',icon:BrainCircuit},
   {label:'Data',path:'/data-trust',icon:Database},
 ]
 
 const titles:Record<string,string> = {
   '/':'Home','/investors':'Clients','/attention':'Reviews',
   '/patterns':'Pattern detection','/advice':'Advice & Follow-ups',
-  '/local-ai':'Meetings','/data-trust':'Data tools',
+  '/local-ai':'Ask AI','/data-trust':'Data tools',
   '/activity':'Activity History','/pilot':'Advisor pilot',
 }
 export default function AppShell(){

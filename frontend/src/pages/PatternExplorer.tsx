@@ -1,3 +1,4 @@
+import ExploreWorkflows from '../components/ExploreWorkflows'
 import { useCallback, useEffect, useState } from 'react'
 import { AlertTriangle, ArrowRight, BarChart3, CircleAlert, RefreshCw, Search, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -39,7 +40,7 @@ export default function PatternExplorer() {
     }catch(e){setError(humanError(e))}
     finally{setScanning(false)}
   }
-  return <div className="page-fade">
+  return <div className="page-fade"><ExploreWorkflows area="patterns"/>
     <div className="standard-heading"><h1>Pattern detection</h1><p>Shared portfolio signals across investors.</p></div>
     {error&&<div className="error-banner" role="alert"><CircleAlert size={18}/>{error}</div>}
     {notice&&<div className="dt-notice"><ShieldCheck size={18}/>{notice}</div>}

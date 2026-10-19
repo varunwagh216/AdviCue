@@ -1,3 +1,4 @@
+import AskAdviCue from '../components/AskAdviCue'
 import {recordText} from '../lib/display'
 import { useEffect, useState } from 'react'
 import { Link,useSearchParams } from 'react-router-dom'
@@ -7,11 +8,12 @@ import { useAuth } from '../context/AuthContext'
 
 type Brief = { id:string; investor_id:string; summary:string; cited_fact_ids:string[]; review_questions:string[]; model:string; created_at?:string }
 type Note = { id:string; investor_id:string; status:'DRAFT'|'APPROVED'; input_method:'TEXT'|'LOCAL_AUDIO'; transcript:string; extracted_draft?:{coverage?:{characters_processed:number;total_characters:number;chunks:number;complete:boolean};summary:string;commitments:string[];review_questions:string[];preferences?:Record<string,string>}|null; approved_summary:string|null; approved_commitments:string[]|null;approved_preferences?:Record<string,string>|null; created_at:string; recording_consent:boolean }
-type AIStatus = { llama_cpp_local_config_valid:boolean; model:string; transcription_model:string; note:string }
+type AIStatus = { runtime_state?:string; llama_cpp_local_config_valid:boolean; model:string; transcription_model:string; note:string }
 
 export default function LocalAI() {
   const { user } = useAuth()
   const [routeParams]=useSearchParams()
+  const [view,setView]=useState(routeParams.get('client')?'NOTES':'ASK')
   const [investors,setInvestors] = useState<Investor[]>([])
   const [selected,setSelected] = useState(routeParams.get('client')||'')
   const [brief,setBrief] = useState<Brief|null>(null)
@@ -43,6 +45,7 @@ export default function LocalAI() {
     api.get<AIStatus>('/ai/status').then(r=>setConfiguration(r.data)).catch(()=>{})
   },[])
   useEffect(()=>{
+    setTranscript('');setRecording(null);setConsent(false);
     if(!selected){setBriefs([]);setNotes([]);setBrief(null);return}
     let active=true
     Promise.all([api.get<{items:Brief[]}>(`/ai/briefs/${encodeURIComponent(selected)}`),api.get<{items:Note[]}>('/meetings',{params:{investor_id:selected}})])
@@ -93,35 +96,35 @@ export default function LocalAI() {
   })}
 
   return <div className="page-fade advc-ai-page">
-    <div className="standard-heading"><h1>Meetings & client briefs</h1>
-      <p>Capture knowledge locally, approve the record, and track the agreed next step.</p></div>
+    <div className="standard-heading"><h1>Ask AdviCue</h1>
+      <p>Answers, client briefs and meeting knowledge in one workspace.</p></div>
     {error&&<div className="error-banner" role="alert"><CircleAlert size={18}/>{error}</div>}
     {notice&&<div className="dt-notice" role="status"><CircleCheck size={18}/>{notice}</div>}
-    <div className="advc-ai-toolbar panel-card"><label htmlFor="ai-investor">Investor</label><select id="ai-investor" value={selected} onChange={e=>setSelected(e.target.value)}>
-      {investors.length===0?<option value="">Import investors first</option>:investors.map(x=><option value={x.id} key={x.id}>{x.id} · {x.display_name}</option>)}
-    </select><span><LockKeyhole size={15}/> {configuration?.llama_cpp_local_config_valid?'Local llama.cpp configured':'Local model setup required'} · {configuration?.model??'Checking…'}</span></div>
-    <div className="advc-ai-grid">
-      <section className="panel-card advc-ai-section"><div className="advc-ai-section-title"><BrainCircuit size={20}/><div><h2>Investor Brief</h2></div></div>
-        <button className="advc-primary" disabled={!selected||!!busy} onClick={generateBrief}><Send size={16}/>{busy==='brief'?'Generating…':'Generate grounded brief'}</button>
+    <div className="ai-view-tabs" role="tablist" aria-label="AI workspace views">{[['ASK','Ask AI'],['BRIEFS','Client briefs'],['NOTES','Meetings']].map(([key,label])=><button key={key} role="tab" aria-selected={view===key} onClick={()=>setView(key)}>{label}</button>)}</div><div className="advc-ai-toolbar panel-card"><label htmlFor="ai-investor">Client</label><select id="ai-investor" disabled={!!busy} value={selected} onChange={e=>setSelected(e.target.value)}>
+      {investors.length===0?<option value="">Import investors first</option>:investors.map(x=><option value={x.id} key={x.id}>{x.display_name}</option>)}
+    </select><span><LockKeyhole size={15}/> {configuration?.runtime_state==='READY'?'Ready':configuration?.runtime_state==='STARTING'?'Starting':'Needs setup'}</span></div>
+    {view==='ASK'&&<AskAdviCue clientName={investors.find(i=>i.id===selected)?.display_name||''}/>}<div className="advc-ai-grid">
+      {view==='BRIEFS'&&<section className="panel-card advc-ai-section"><div className="advc-ai-section-title"><BrainCircuit size={20}/><div><h2>Client brief</h2></div></div>
+        <p className="brief-intro">Prepare for your next conversation with {investors.find(i=>i.id===selected)?.display_name||'this client'}.</p><div className="ai-example-actions"><Link to={'/investors?selected='+selected}>Review portfolio</Link><button onClick={()=>setView('ASK')}>Ask a question ↗</button></div><button className="advc-primary" disabled={!selected||!!busy} onClick={generateBrief}><Send size={16}/>{busy==='brief'?'Generating…':'Generate grounded brief'}</button>
         
-        {(brief||briefs[0])&&<div className="advc-ai-result"><h3>Latest generated brief</h3><p>{recordText((brief??briefs[0]).summary)}</p>
+        {(brief||briefs[0])&&<div className="advc-ai-result"><h3>Latest client brief</h3><p>{recordText((brief??briefs[0]).summary)}</p>
           <h4>Questions for the advisor</h4><ul>{(brief??briefs[0]).review_questions.map((q,i)=><li key={i}>{q}</li>)}</ul>
           <span><ShieldCheck size={14}/> {(brief??briefs[0]).cited_fact_ids.length} source references · {(brief??briefs[0]).model}</span></div>}
         {!brief&&briefs.length===0&&<div className="advc-ai-placeholder"><FileText size={27}/><span>No brief generated for this investor yet.</span></div>}
-      </section>
-      <section className="panel-card advc-ai-section"><div className="advc-ai-section-title"><Mic size={20}/><div><h2>Meeting Notes</h2></div></div>
-        {user?.role==='ADVISOR'?<><label className="advc-ai-field">Typed meeting notes<textarea id="meeting-transcript" rows={5} value={transcript} onChange={e=>setTranscript(e.target.value)} placeholder="Type what was discussed, without inventing previous recommendations…"/></label>
+      </section>}
+      {view==='NOTES'&&<section className="panel-card advc-ai-section"><div className="advc-ai-section-title"><Mic size={20}/><div><h2>Capture a conversation</h2></div></div>
+        {user?.role==='ADVISOR'?<><div className="ai-example-actions"><button onClick={()=>setTranscript(`Agenda for ${investors.find(i=>i.id===selected)?.display_name||'this client'}: review progress towards ${investors.find(i=>i.id===selected)?.primary_goal||'the agreed goal'}, confirm liquidity needs, and agree the next review date.`)}>Use client meeting agenda ↗</button><Link to={'/investors?selected='+selected}>Open client context</Link></div><label className="advc-ai-field">Typed meeting notes<textarea id="meeting-transcript" rows={5} value={transcript} onChange={e=>setTranscript(e.target.value)} placeholder="Type what was discussed, without inventing previous recommendations…"/></label>
           <button className="advc-primary" disabled={!selected||!!busy||transcript.trim().length<12} onClick={saveTypedNote}><FileText size={16}/> Save draft notes</button>
           <div className="advc-ai-upload"><strong><FileAudio size={17}/> Optional local transcription</strong><input type="file" aria-label="Meeting audio" accept=".wav,.mp3,.m4a,.ogg,.webm" onChange={e=>setRecording(e.target.files?.[0]??null)}/>
             <label className="advc-ai-consent"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)}/>I confirm recording consent was obtained.</label>
             <button className="advc-quiet-btn" disabled={!recording||!consent||!!busy} onClick={transcribe}>{busy==='transcribe'?'Transcribing locally…':'Transcribe and create draft'}</button>
             <small>Offline whisper.cpp transcription. Install its local model first. WAV is supported directly; other formats require local FFmpeg. Raw audio is deleted after transcription.</small></div></>:<p className="advc-ai-hint">Meeting-note access is limited to authorized client records.</p>}
-      </section>
+      </section>}
     </div>
-    <section className="panel-card advc-ai-section advc-ai-notes"><div className="advc-ai-section-title"><FileText size={20}/><div><h2>Drafts &amp; Approved Meeting Notes</h2></div></div>
+    {view==='NOTES'&&<section className="panel-card advc-ai-section advc-ai-notes"><div className="advc-ai-section-title"><FileText size={20}/><div><h2>Drafts &amp; Approved Meeting Notes</h2></div></div>
       <div className="advc-ai-note-list">{notes.length===0?<p className="advc-ai-hint">No meeting notes for the selected investor.</p>:notes.map(note=><div className="advc-ai-note" key={note.id}>
         <div className="advc-ai-note-head"><strong>{note.input_method==='TEXT'?'Typed notes':'Local transcription'}</strong><span className={`advc-status-tag ${note.status.toLowerCase()}`}>{note.status}</span><small>{new Date(note.created_at).toLocaleDateString('en-IN')}</small></div>
-        <p>{recordText(note.transcript)}</p>
+        <details className="meeting-transcript"><summary>Read meeting transcript</summary><p>{recordText(note.transcript)}</p></details>
         {note.extracted_draft&&note.status==='DRAFT'&&<div className="advc-ai-extraction"><strong>Unapproved AI draft:</strong> {note.extracted_draft.summary}{note.extracted_draft.coverage&&<small className="desk-coverage">Complete transcript processed · {note.extracted_draft.coverage.characters_processed.toLocaleString()} characters · {note.extracted_draft.coverage.chunks} sections</small>}</div>}
         {note.status==='APPROVED'&&<div className="advc-ai-extraction"><strong>Advisor-approved summary:</strong> {recordText(note.approved_summary)}
           {!!Object.keys(note.approved_preferences??{}).length&&<p><strong>Approved client context:</strong> {Object.entries(note.approved_preferences??{}).map(([k,v])=>`${k.replaceAll('_',' ')}: ${v}`).join(' · ')}</p>}{!!note.approved_commitments?.length&&<ul>{note.approved_commitments.map((x,i)=><li className="desk-commitment-task" key={i}><span>{recordText(x)}</span><label>Follow-up date<input type="date" value={taskDates[note.id+i]||''} onChange={e=>setTaskDates({...taskDates,[note.id+i]:e.target.value})}/></label><button className="advc-quiet-btn" disabled={!!busy||!taskDates[note.id+i]} onClick={()=>void commitmentTask(note,i)}>Create task</button></li>)}</ul>}
@@ -141,11 +144,11 @@ export default function LocalAI() {
           <label>Life events (optional)<textarea maxLength={300} rows={2} value={lifeEvents} onChange={e=>setLifeEvents(e.target.value)}/></label>
           <div className="advc-actions"><button className="advc-primary" disabled={!!busy||reviewSummary.trim().length<12} onClick={approve}>Approve notes</button><button className="advc-quiet-btn" onClick={()=>setReviewId('')}>Cancel</button></div></div>}
       </div>)}</div>
-    </section>
-    {!!checkStatuses.length&&<section className="panel-card advc-ai-section"><h2>Commitment verification</h2><p>Evaluated only against holdings dated after meeting approval. No dated evidence means NOT_ASSESSABLE.</p>
-      {checkStatuses.map(c=><p key={c.id}>{c.illustrative_demo_only?'Sample commitment · ':''}{c.metric} {c.target_pct}% by {c.due_date}: <strong>{c.status}</strong> {c.observed_pct!==null?`(observed ${c.observed_pct}%)`:''}</p>)}
+    </section>}
+    {view==='NOTES'&&!!checkStatuses.length&&<section className="panel-card advc-ai-section"><h2>Commitment verification</h2><p>Evaluated only against holdings dated after meeting approval. Checks without dated evidence remain unverified.</p>
+      {checkStatuses.map(c=><p key={c.id}>{c.metric.replaceAll('_',' ')} {c.target_pct}% by {c.due_date}: <strong>{c.status.replaceAll('_',' ').toLowerCase()}</strong> {c.observed_pct!==null?`(observed ${c.observed_pct}%)`:''}</p>)}
       <button className="advc-quiet-btn" onClick={()=>void loadChecks()}>Refresh checks</button>
     </section>}
-    <p className="page-footnote"><ShieldCheck size={16}/> All investor records are permission-scoped. AI assistance is optional and cannot approve advice, execute trades or invent verified returns.</p>
+    <p className="page-footnote ai-workspace-footnote"><ShieldCheck size={16}/> All investor records are permission-scoped. AI assistance is optional and cannot approve advice, execute trades or invent verified returns.</p>
   </div>
 }

@@ -19,3 +19,9 @@ Login, local inference model weights, financial calculations and startup port fa
 ## Prototype alignment refinement
 
 Compact typography, narrower navigation, three summary cards, shorter action rows and a side-by-side review queue/detail panel now follow the concept board more closely. Advice and activity use collapsible supporting details. Sample prefixes are removed from displayed titles without modifying the underlying records. Legacy rule IDs and Python score dictionaries are removed from advisor-facing explanations while readable allocation facts remain. Seven browser workflows and the exact legacy-text regression case passed; production build passed.
+
+## Complete workspace consistency
+
+Home now has five actionable AI suggestions and a larger greeting; the privacy sentence under its search input is removed. Reviews explicitly positions the detail panel in row one beside the queue on desktop, including wide and compact windows. Clients and Patterns share the same typography, card surfaces and navy/teal palette. Ask AI, Client Briefs and Meetings are separate views of one AI workspace. Ask AI returns actual search results with client links and evidence scope; meeting agenda buttons populate editable text and never save or approve records automatically. All feature entry points use existing authorized client records, without per-item Sample or Illustrative prefixes. Underlying provenance is preserved.
+
+Validation covers right-hand review layout at 1600, 1280, 1000 and 900 pixels; Home suggestions and typography; record-linked feature examples; real SIP search answers; editable meeting agendas; mobile layouts; and the legacy-text regression.
