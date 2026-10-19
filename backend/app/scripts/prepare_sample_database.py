@@ -12,7 +12,7 @@ import zipfile
 
 SAMPLE_URL='https://github.com/varunwagh216/AdviCue/releases/download/submission/AdviCue_AI.zip'
 SAMPLE_MEMBER='AdviCue_AI/backend/advicue.db'
-SAMPLE_SHA256='343e71acdcff43410a9d7462d5d82e74044f5e0b82b7c3af7adde68cb2d512b2'
+SAMPLE_SHA256='2ce2c373918931e709b881c6a60773f11e270e7abcb3583f51e6eb8682af5480'
 
 
 def has_records(path:Path)->bool:

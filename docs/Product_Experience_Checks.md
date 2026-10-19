@@ -31,3 +31,11 @@ Validation covers right-hand review layout at 1600, 1280, 1000 and 900 pixels; H
 Removed the cross-page client-example strips and their component. Top navigation search expands to 680px where space permits and remains responsive. The navy identity now covers sidebar gradients, active navigation, page headings, primary buttons and selected controls. Home layout remains unchanged. Patterns leads with its purpose, a plain-language finding and the next review action; detailed statistical methods are expandable. Data management separates holdings intake from follow-up exports and explains the three-step preview/review/save flow. Import permissions and confirmation requirements are preserved.
 
 Validation: production build and 13 UI/copy checks, including search width, palette, absence of removed strips, pattern purpose, template download, mobile layout and existing advisor workflows.
+
+## Guided Patterns and prepared pending work
+
+Home greeting, date and supporting line are larger. Clients search input uses a single flex-sized field within its frame. Patterns is redesigned around a three-step explanation and three views: Portfolio Findings, Risk & Transaction Checks, and Book Coverage. All original saved findings, scan permission checks, dated group metrics, client links, source methods, risk-profile comparisons, transaction observations and long-tail coverage remain available. Readable primary text is 14–15px or larger.
+
+The bundled fictional judging database now includes six pending follow-ups (overdue, due today and upcoming) and two additional advice drafts. Four follow-ups are due at preparation on 19 October 2026; future launches retain unfinished work as overdue. Existing source reviews remain open. No completed financial outcome or real client contact was invented. Source provenance is recorded in the audit log. Existing working databases are not replaced.
+
+Checks: production build; 11 setup/login regression checks; 16 UI workflow checks (including an accessible-link label correction and retest); separate fresh initialization/login returned 20 assigned clients, 20 clients with reviews and four due follow-ups. Completing a task in the disposable test workspace reduced the Home due count.

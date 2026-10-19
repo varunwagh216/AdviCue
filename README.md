@@ -24,3 +24,7 @@ All AI processing uses local llama.cpp and whisper.cpp. Python analytics and SQL
 Home provides voice/text search and three next actions. Reviews filter by urgency, goal and status. Client workspaces have Overview, Portfolio & Goals, Advice & Outcomes and Meetings tabs. Advice timelines distinguish completed tasks from verified investment outcomes. Follow-ups have Today, Upcoming and Overdue views. A first-visit guide, accessible focus states, responsive navigation and live local-AI availability checks support the full workflow.
 
 Validation details: docs/Product_Experience_Checks.md.
+
+## Judge walkthrough
+
+A fresh installation includes open reviews, six pending follow-ups and two advice drafts in the fictional judging workspace. Start with Your day, open an overdue follow-up, record its outcome, and refresh Home to see the count update. Use Patterns to explore a shared portfolio concern, inspect the named clients, then switch to risk/transaction checks and book coverage. Task dates are prepared with this submission; unfinished tasks remain overdue on later dates. Existing databases are preserved, so an older working installation is not automatically reseeded.
