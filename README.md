@@ -1,8 +1,10 @@
+Automatic first launch: extract the full ZIP and run RUN_WINDOWS.bat. Missing Python 3.14 x64 is installed from python.org for the current Windows user; Python packages and local AI assets are then prepared automatically. Internet is required for first setup. React is already built, so Node.js/npm are not required. Prepared launches remain offline. Managed PCs may restrict software installation; if blocked, ask the PC owner to install Python 3.14 x64. SETUP_WINDOWS.bat remains available for manual preparation or repair.
+
 # AdviCue AI
 
 Download **AdviCue_AI.zip** from the latest GitHub release for the application. Download **AdviCue_AI_Judge_Materials.zip** separately for slides, the guide and sample inputs.
 
-Install Python 3.14 x64 (or 3.12 x64), extract the application into a new folder, open it in VS Code, and run:
+Extract the application into a new folder. Double-click RUN_WINDOWS.bat for automatic setup and launch, or run setup separately in VS Code:
 
 ```powershell
 .\SETUP_WINDOWS.bat

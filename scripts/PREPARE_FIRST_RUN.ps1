@@ -17,3 +17,7 @@ Write-Host 'Preparing local llama.cpp and text model...' -ForegroundColor Cyan
 Write-Host 'Preparing local whisper.cpp and speech model...' -ForegroundColor Cyan
 & (Join-Path $PSScriptRoot 'PREPARE_WHISPER_BUNDLE.ps1')
 Write-Host 'Preparation finished. Run RUN_WINDOWS.bat. Normal operation needs no internet.' -ForegroundColor Green
+
+$marker=Join-Path (Split-Path -Parent $PSScriptRoot) 'app-logs/setup-complete.txt'
+New-Item -ItemType Directory -Force -Path (Split-Path -Parent $marker) | Out-Null
+Set-Content -LiteralPath $marker -Value 'Local dependencies prepared successfully.'

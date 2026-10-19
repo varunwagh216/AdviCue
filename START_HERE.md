@@ -1,10 +1,12 @@
+Automatic first launch: extract the full ZIP and run RUN_WINDOWS.bat. Missing Python 3.14 x64 is installed from python.org for the current Windows user; Python packages and local AI assets are then prepared automatically. Internet is required for first setup. React is already built, so Node.js/npm are not required. Prepared launches remain offline. Managed PCs may restrict software installation; if blocked, ask the PC owner to install Python 3.14 x64. SETUP_WINDOWS.bat remains available for manual preparation or repair.
+
 # AdviCue AI — Start here
 
 AdviCue helps an advisor decide which clients need attention, understand the supporting evidence, and follow agreed advice through to review.
 
 ## Install and open
 
-1. Install Python **3.14 x64 or 3.12 x64** on Windows. Keep the Python launcher enabled.
+1. Python 3.14 x64 is installed automatically if a compatible Python is missing.
 2. Extract **AdviCue_AI.zip** fully into a new folder. Open the extracted `AdviCue_AI` folder in VS Code, or use File Explorer.
 3. Run **SETUP_WINDOWS.bat** once. Internet is required to prepare the local AI software and models. Wait for setup to finish.
 4. Run **RUN_WINDOWS.bat**. Use the browser address it opens. If port 8000 is occupied, the launcher chooses another free port automatically.
