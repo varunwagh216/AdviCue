@@ -22,3 +22,4 @@ import './focused-workspace.css'
 import './workspace.css'
 
 import './product-experience.css'
+import './prototype-match.css'

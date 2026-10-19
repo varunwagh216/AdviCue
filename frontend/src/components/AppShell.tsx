@@ -9,10 +9,10 @@ const navigation = [
   {label:'Home',path:'/',icon:Home},
   {label:'Reviews',path:'/attention',icon:Radar},
   {label:'Clients',path:'/investors',icon:Users},
-  {label:'Pattern detection',path:'/patterns',icon:Layers3},
-  {label:'Advice & follow-ups',path:'/advice',icon:ClipboardCheck},
+  {label:'Patterns',path:'/patterns',icon:Layers3},
+  {label:'Advice',path:'/advice',icon:ClipboardCheck},
   {label:'Meetings',path:'/local-ai',icon:BrainCircuit},
-  {label:'Data tools',path:'/data-trust',icon:Database},
+  {label:'Data',path:'/data-trust',icon:Database},
 ]
 
 const titles:Record<string,string> = {
@@ -34,7 +34,7 @@ export default function AppShell(){
     try{await logout()}catch{ /* local session cleared by auth context */ }
     finally{setSigningOut(false);navigate('/login')}
   }
-  return <div className="app-layout advisor-layout">
+  return <div className="app-layout advisor-layout prototype-layout">
     {open&&<button className="mobile-scrim" onClick={()=>setOpen(false)} aria-label="Close navigation"/>}
     <aside className={`sidebar ${open?'sidebar-open':''}`}>
       <div className="sidebar-brand"><Brand/><button className="close-mobile" aria-label="Close" onClick={()=>setOpen(false)}><X size={20}/></button></div>

@@ -15,3 +15,7 @@ Implemented the navy and teal prototype using existing advisor data and routes.
 Validation: production TypeScript/Vite build passed; 51 backend regression checks passed; 6 desktop/mobile browser workflows passed using an isolated sample database. Browser checks cover real SIP results, evidence links, review filters, client tabs, outcome timeline, follow-up schedules, first-visit state and mobile menu. The tests do not constitute a real advisor pilot.
 
 Login, local inference model weights, financial calculations and startup port fallback are preserved. No external assets or services were added. Models are excluded from the application ZIP; judge materials remain a separate download.
+
+## Prototype alignment refinement
+
+Compact typography, narrower navigation, three summary cards, shorter action rows and a side-by-side review queue/detail panel now follow the concept board more closely. Advice and activity use collapsible supporting details. Sample prefixes are removed from displayed titles without modifying the underlying records. Legacy rule IDs and Python score dictionaries are removed from advisor-facing explanations while readable allocation facts remain. Seven browser workflows and the exact legacy-text regression case passed; production build passed.
