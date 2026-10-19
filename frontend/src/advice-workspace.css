@@ -1,0 +1,73 @@
+.advice-workspace .advice-section-nav { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; background: none; border: 0; padding: 0; margin: 0 0 24px; }
+.advice-workspace .advice-section-nav a { display: flex; align-items: center; gap: 12px; padding: 17px 20px; border: 1px solid #dce6ef; border-radius: 10px; color: #49647f; background: #fff; }
+.advice-workspace .advice-section-nav a.active { background: #edf6fa; border-color: #188f9b; color: #103b58; box-shadow: inset 3px 0 #009caa; }
+.advice-workspace .advice-section-nav strong { display: block; font-size: 16px; line-height: 1.4; }
+.advice-workspace .advice-section-nav small { display: block; font-size: 14px; line-height: 1.5; margin-top: 3px; color: #526d83; }
+.advice-workspace .advice-section-nav svg { flex-shrink: 0; }
+.advice-workspace .advice-intro { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 28px; align-items: center; padding: 24px; border: 1px solid #dce7ef; background: #f4f9fc; border-radius: 12px; margin-bottom: 28px; }
+.advice-workspace .advice-kicker { display: block; color: #147d88; font-size: 12px; letter-spacing: 1px; font-weight: 700; margin-bottom: 9px; }
+.advice-workspace .advice-intro h2 { font-size: 23px; line-height: 1.35; margin: 0 0 10px; color: #0b2848; }
+.advice-workspace .advice-intro p { max-width: 670px; margin: 0; color: #526b82; font-size: 15px!important; line-height: 1.65; }
+.advice-workspace .advice-overview-counts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; max-width: 290px; }
+.advice-workspace .advice-overview-counts > div { padding-left: 20px; border-left: 1px solid #cedeea; }
+.advice-workspace .advice-overview-counts strong { display: block; color: #103756; font-size: 30px; line-height: 1.2; }
+.advice-workspace .advice-overview-counts span { display: block; color: #526b82; font-size: 14px; line-height: 1.5; margin-top: 5px; }
+.advice-workspace .advice-list-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.advice-workspace .advice-list-heading h2 { font-size: 21px; color: #0b2848; margin: 0; }
+.advice-workspace .advice-list-heading > span { font-size: 14px; color: #526b82; }
+.advice-workspace .v6-list-tools { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.advice-workspace .v6-list-tools input { flex: 1 1 260px; min-width: 0; }
+.advice-workspace .v6-list-tools select { flex: 0 1 210px; }
+.advice-workspace .v6-list-tools :is(input,select) { min-height: 44px; }
+.advice-workspace .v6-advice-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+.advice-workspace .v6-advice-card { display: flex; flex-direction: column; gap: 0; padding: 23px; border: 1px solid #dce6ef; border-radius: 12px; transition: border-color .15s,box-shadow .15s; }
+.advice-workspace .v6-advice-card:hover { border-color: #589da9; box-shadow: 0 4px 16px #0b28480a; }
+.advice-workspace .v6-advice-card > div:first-child { display: flex; justify-content: space-between; align-items: start; gap: 12px; margin-bottom: 22px; }
+.advice-workspace .v6-advice-card > div:first-child strong { font-size: 18px; color: #0b2848; }
+.advice-workspace .advice-card-label { display: block; font-size: 13px; font-weight: 600; color: #526b82; margin-bottom: 7px; }
+.advice-workspace .v6-advice-card h2 { font-size: 18px; color: #173c59; line-height: 1.5; margin: 0 0 18px; }
+.advice-workspace .advice-card-objective { border-left: 3px solid #b8dce1; padding: 0 0 0 14px; margin-bottom: 22px; }
+.advice-workspace .advice-card-objective p { margin: 0; font-size: 15px!important; line-height: 1.65; color: #526b82; }
+.advice-workspace .v6-advice-card footer { margin-top: auto; padding-top: 16px; border-top: 1px solid #e5edf4; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; color: #38627c; }
+.advice-workspace .v6-record { margin-bottom: 22px; padding: 26px; }
+.advice-workspace .advice-form-intro { color: #526b82; margin: 8px 0 24px; line-height: 1.65; }
+.advice-workspace .advice-form-section { display: grid; gap: 18px; border: 1px solid #dce6ef; border-radius: 10px; padding: 22px; margin: 0; min-width: 0; }
+.advice-workspace .advice-form-section legend { padding: 0 8px; font-size: 18px; color: #123855; font-weight: 600; }
+.advice-workspace .advice-form-help { margin: 0; color: #526b82; font-size: 15px!important; line-height: 1.65; }
+.advice-workspace .v6-form { gap: 22px; }
+.advice-workspace .v6-form label { display: grid; gap: 9px; line-height: 1.5; }
+.advice-workspace .v6-form :is(input,select,textarea) { width: 100%; min-width: 0; box-sizing: border-box; }
+.advice-workspace .v6-form textarea { min-height: 100px; }
+.advice-workspace .v6-form > button { justify-self: start; }
+.advice-workspace .advice-progress-form { padding-top: 24px; margin-top: 24px; border-top: 1px solid #dce6ef; }
+.advice-workspace .advice-progress-form h3 { margin: 0; font-size: 20px; }
+.advice-workspace .advice-detail-story { margin: 26px 0; }
+.advice-workspace .advice-detail-story h3 { font-size: 21px; line-height: 1.5; margin: 0 0 24px; }
+.advice-workspace .advice-detail-story p { line-height: 1.75; }
+.advice-workspace .product-segments { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.advice-workspace .product-segments button { min-height: 42px; }
+.advice-workspace .v6-export-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin: 0 0 20px; }
+.advice-workspace .v6-followup-table td { padding-top: 18px; padding-bottom: 18px; vertical-align: top; line-height: 1.6; }
+.advice-workspace .v6-followup-table td:nth-child(2) { min-width: 220px; }
+.advice-workspace .advc-status-tag { white-space: normal; line-height: 1.4; }
+.advice-workspace .focus-empty { grid-column: 1/-1; padding: 28px; border: 1px dashed #cbdce9; border-radius: 10px; }
+@media (max-width:1000px) {
+ .advice-workspace .advice-intro { grid-template-columns: 1fr; gap: 20px; }
+ .advice-workspace .advice-overview-counts { max-width: none; }
+ .advice-workspace .advice-overview-counts > div { border-left: 0; padding-left: 0; }
+}
+@media (max-width:650px) {
+ .advice-workspace .advice-section-nav { grid-template-columns: 1fr; gap: 8px; }
+ .advice-workspace .advice-section-nav a { padding: 14px; }
+ .advice-workspace .advice-intro { padding: 20px; }
+ .advice-workspace .advice-intro h2 { font-size: 21px; }
+ .advice-workspace .v6-advice-grid { grid-template-columns: 1fr; }
+ .advice-workspace .v6-list-tools select { flex: 1 1 100%; }
+ .advice-workspace .v6-record { padding: 20px; }
+ .advice-workspace .advice-form-section { padding: 16px 12px; }
+ .advice-workspace .advice-list-heading { align-items: start; }
+}
+
+.advice-workspace .v6-advice-card .advice-card-objective { display: block; }
+
+.advice-workspace .v6-followup-table td:first-child strong { font-size: 15px; line-height: 1.5; }
