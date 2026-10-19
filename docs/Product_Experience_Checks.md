@@ -39,3 +39,9 @@ Home greeting, date and supporting line are larger. Clients search input uses a 
 The bundled fictional judging database now includes six pending follow-ups (overdue, due today and upcoming) and two additional advice drafts. Four follow-ups are due at preparation on 19 October 2026; future launches retain unfinished work as overdue. Existing source reviews remain open. No completed financial outcome or real client contact was invented. Source provenance is recorded in the audit log. Existing working databases are not replaced.
 
 Checks: production build; 11 setup/login regression checks; 16 UI workflow checks (including an accessible-link label correction and retest); separate fresh initialization/login returned 20 assigned clients, 20 clients with reviews and four due follow-ups. Completing a task in the disposable test workspace reduced the Home due count.
+
+## Expanded Pattern details readability
+
+Expanded matched-client lists have a dated heading, larger row text, allocation bars, source-record counts and direct workspace links. Finding methods are structured into records compared, finding and advisor review, with metadata in a definition list and detailed calculations separately expandable. Risk/profile checks separate the observed result from next actions and named client links. Transaction checks show counters and labeled event details. Book Coverage explains each count in its own card and links the overview to the assigned review queue. Primary detail text is 16px; section headings are larger.
+
+Validation: production TypeScript/Vite build passed. Two focused desktop/mobile browser workflows passed, covering source-row preservation, client navigation, method expansion, computed text sizes, transaction/coverage values and review-queue navigation.
