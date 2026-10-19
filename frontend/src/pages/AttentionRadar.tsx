@@ -90,7 +90,7 @@ export default function AttentionRadar() {
         <option value="OPEN">Open</option><option value="IN_REVIEW">In review</option>
         <option value="NEEDS_DATA">Need verification</option><option value="RESOLVED">Resolved</option>
       </select></div>
-      <label style={{display:'flex',alignItems:'center',gap:6,fontSize:12}}><input type="checkbox" checked={showHistory} onChange={e=>setShowHistory(e.target.checked)} />Show case history</label>
+      <label style={{display:'flex',alignItems:'center',gap:6,fontSize:14}}><input type="checkbox" checked={showHistory} onChange={e=>setShowHistory(e.target.checked)} />Show case history</label>
       <button className="advc-quiet-btn" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button>
     </div>
     <div className="advc-two-col concept-radar-layout">
