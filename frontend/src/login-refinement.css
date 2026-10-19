@@ -1,0 +1,38 @@
+.login-page { grid-template-columns: 49.5% 50.5%; }
+.login-page .login-left { padding: 48px clamp(32px, 5.2vw, 80px); background: linear-gradient(145deg, #123e57, #0d2c43); justify-content: center; }
+.login-page .login-left-top { position: absolute; top: 48px; left: clamp(32px, 5.2vw, 80px); }
+.login-page .brand-subtitle { display: none; }
+.login-page .brand-name { font-size: 32px; color: #fff; }
+.login-page .brand-name span { color: inherit; }
+.login-page .brand-symbol { width: 34px; height: 46px; }
+.login-page .login-story { margin: 0; max-width: 590px; }
+.login-page .login-story h1 { font-size: clamp(48px, 5.4vw, 80px); line-height: 1.08; letter-spacing: -2px; margin: 0 0 24px; }
+.login-page .login-story h1 em { color: #90efd3; }
+.login-page .login-story > p { font-size: clamp(18px, 1.7vw, 25px); color: #b1d8ee; line-height: 1.6; max-width: none; margin: 0; }
+.login-page .login-right { padding: 64px clamp(32px, 6vw, 92px); background: #f7faff; }
+.login-page .login-form-container { max-width: 480px; }
+.login-page .login-form-container h2 { font-size: clamp(30px, 3vw, 42px); line-height: 1.2; letter-spacing: -1px; color: #0b2848; margin: 0 0 48px; }
+.login-page .login-form { gap: 12px; }
+.login-page .login-form label { font-size: 16px; font-weight: 600; color: #132d49; }
+.login-page .login-form input { min-height: 54px; padding: 14px 16px; font-size: 16px; border-color: #bccde0; color: #132d49; border-radius: 9px; }
+.login-page .login-form > input { margin-bottom: 20px; }
+.login-page .password-field input { padding-right: 54px; }
+.login-page .password-field button { width: 44px; height: 44px; right: 5px; display: grid; place-items: center; color: #526780; }
+.login-page .sign-in-button { height: 56px; margin-top: 28px; background: #00858b; font-size: 17px; font-weight: 600; }
+.login-page .sign-in-button:hover { background: #006d73; }
+.login-page .sign-in-button:disabled { opacity: .7; cursor: wait; }
+.login-page .login-error { font-size: 15px; line-height: 1.5; }
+@media (max-width: 820px) {
+  .login-page { grid-template-columns: 1fr; }
+  .login-page .login-left { min-height: auto; padding: 28px 24px 32px; }
+  .login-page .login-left-top { position: relative; inset: auto; margin-bottom: 30px; }
+  .login-page .brand-name { font-size: 25px; }
+  .login-page .brand-symbol { width: 26px; height: 36px; }
+  .login-page .login-story { display: block; }
+  .login-page .login-story h1 { font-size: 40px; letter-spacing: -1px; margin-bottom: 14px; }
+  .login-page .login-story > p { font-size: 18px; }
+  .login-page .login-right { min-height: auto; padding: 36px 24px 48px; }
+  .login-page .login-form-container h2 { font-size: 30px; margin-bottom: 28px; }
+}
+
+.login-page .login-story h1, .login-page .login-form-container h2 { font-weight: 700; }
